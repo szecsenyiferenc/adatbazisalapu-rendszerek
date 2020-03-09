@@ -1,1 +1,0 @@
-# adatbazisalapu-rendszerek
