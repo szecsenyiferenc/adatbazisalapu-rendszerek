@@ -5,17 +5,15 @@ using System.Threading.Tasks;
 
 namespace WebShop.Models
 {
-    public class Product
+    public class Category
     {
-        public Product(int id, string name, double price)
+        public Category(int id, string name)
         {
             Id = id;
             Name = name;
-            Price = price;
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public double Price { get; set; }
     }
 }

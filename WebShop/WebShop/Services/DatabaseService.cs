@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using WebShop.Models;
@@ -16,79 +17,87 @@ namespace WebShop.Services
 
         public DatabaseService()
         {
-            var res = GetProducts();
+            var res = GetData<Category>();
             Console.WriteLine(res);
         }
 
-        private List<Product> GetProducts()
+        private List<T> GetData<T>()
         {
-            string query = "SELECT Id, Name, Price FROM Product";
-            var queryParams = new List<QueryParam>()
-            {
-                new QueryParam("Id", QueryParamType.Int),
-                new QueryParam("Name", QueryParamType.String),
-                new QueryParam("Price", QueryParamType.Double)
-            };
+            var queryParams = new List<QueryParam>();
+           
+            Type type = typeof(T);
 
-            return QueryDatabase<List<Product>>(query, queryParams.ToArray());
+            foreach (PropertyInfo prop in type.GetProperties())
+            {
+                queryParams.Add(new QueryParam(prop.Name, prop.PropertyType));
+            }
+
+            string query = $"SELECT {CreateSqlParams(queryParams)} FROM {type.Name}";
+
+            return QueryDatabase<T>(query, queryParams.ToArray());
         }
 
-        private T QueryDatabase<T>(string query, params QueryParam[] list)
+        private string CreateSqlParams(List<QueryParam> parameters)
+        {
+            StringBuilder str = new StringBuilder();
+            for (int i = 0; i < parameters.Count; i++)
+            {
+                str.Append(parameters[i].PropertyName);
+                if(i != parameters.Count - 1)
+                {
+                    str.Append(",");
+                }
+                str.Append(" ");
+            }
+            return str.ToString();
+        }
+
+        public T CreateInstance<T>(params object[] paramArray)
+        {
+            return (T)Activator.CreateInstance(typeof(T), args: paramArray);
+        }
+
+        private List<T> QueryDatabase<T>(string query, params QueryParam[] list)
         {
             using (var connection = new System.Data.SqlClient.SqlConnection(@$"Server={serverName};Database={databaseName};Trusted_Connection=True;"))
             {
                 connection.Open();
-                string value = null;
+                var result = new List<T>();
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        StringBuilder str = new StringBuilder();
-                        str.Append("[");
                         while (reader.Read())
                         {
-                            str.Append("{");
+                            object[] paramArray = new object[list.Length];
                             for (int i = 0; i < list.Length; i++)
                             {
                                 switch (list[i].QueryParamType)
                                 {
                                     case QueryParamType.Int:
-                                        str.Append($"\"{list[i].PropertyName}\":\"{reader.GetInt32(i)}\"");
+                                        paramArray[i] = reader.GetInt32(i);
                                         break;
                                     case QueryParamType.Boolean:
-                                        str.Append($"\"{list[i].PropertyName}\":\"{reader.GetBoolean(i)}\"");
+                                        paramArray[i] = reader.GetBoolean(i);
                                         break;
                                     case QueryParamType.DateTime:
-                                        str.Append($"\"{list[i].PropertyName}\":\"{reader.GetDateTime(i)}\"");
+                                        paramArray[i] = reader.GetDateTime(i);
                                         break;
                                     case QueryParamType.Double:
-                                        str.Append($"\"{list[i].PropertyName}\":\"{reader.GetDouble(i)}\"");
+                                        paramArray[i] = reader.GetDouble(i);
                                         break;
                                     case QueryParamType.String:
                                     default:
-                                        str.Append($"\"{list[i].PropertyName}\":\"{reader.GetString(i)}\"");
+                                        paramArray[i] = reader.GetString(i);
                                         break;
                                 }
-
-                                if(i != list.Length - 1)
-                                {
-                                    str.Append(",");
-                                }
-
                             }
-                            str.Append("},");
+                            result.Add(CreateInstance<T>(paramArray));
                         }
-                        str.Append("]");
-                        value = str.ToString();
                     }
                 }
-
-
-                T result = JsonConvert.DeserializeObject<T>(value);
-
                 return result;
-
             }
         }
     }

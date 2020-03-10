@@ -7,14 +7,39 @@ namespace WebShop.Models
 {
     public class QueryParam
     {
-        public QueryParam(string propertyName, QueryParamType queryParamType)
+        public QueryParam(string propertyName, Type queryParamType)
         {
             PropertyName = propertyName;
-            QueryParamType = queryParamType;
+            QueryParamType = DetermineParam(queryParamType);
         }
 
         public string PropertyName { get; set; }
         public QueryParamType QueryParamType { get; set; }
+
+        private QueryParamType DetermineParam(Type type)
+        {
+            if(type == typeof(int))
+            {
+                return QueryParamType.Int;
+            }
+            if (type == typeof(bool))
+            {
+                return QueryParamType.Boolean;
+            }
+            if (type == typeof(DateTime))
+            {
+                return QueryParamType.DateTime;
+            }
+            if (type == typeof(double))
+            {
+                return QueryParamType.Double;
+            }
+            else
+            {
+                return QueryParamType.String;
+            }
+
+        }
     }
 
     public enum QueryParamType
