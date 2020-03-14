@@ -34,6 +34,6 @@ namespace WebShop.Models.DatabaseModels
         public List<VisitModel> VisitedProducts { get; set; }
         public List<PurchaseModel> PurhasedProducts { get; set; }
         public List<CommentModel> Comments { get; set; }
-        public List<LikeModel> Like { get; set; }
+        public List<LikeModel> Likes { get; set; }
     }
 }

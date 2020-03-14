@@ -27,8 +27,6 @@ namespace WebShop.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var db = new DatabaseService();
-
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

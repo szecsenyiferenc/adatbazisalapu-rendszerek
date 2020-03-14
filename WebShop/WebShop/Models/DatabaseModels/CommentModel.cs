@@ -7,7 +7,7 @@ namespace WebShop.Models.DatabaseModels
 {
     public class CommentModel
     {
-        public CommentModel(int customerId, int productId, DateTime time, string text)
+        public CommentModel(string customerId, int productId, DateTime time, string text)
         {
             CustomerId = customerId;
             ProductId = productId;
@@ -15,9 +15,11 @@ namespace WebShop.Models.DatabaseModels
             Text = text;
         }
 
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
         public int ProductId { get; set; }
         public DateTime Time { get; set; }
         public string Text { get; set; }
+        public ProductModel Product { get; set; }
+        public CustomerModel Customer { get; set; }
     }
 }

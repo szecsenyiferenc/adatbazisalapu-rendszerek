@@ -7,8 +7,17 @@ namespace WebShop.Models.DatabaseModels
 {
     public class VisitModel
     {
-        public int CusomterId { get; set; }
+        public VisitModel(string cusomterId, int productId, int timesOfVisit)
+        {
+            CusomterId = cusomterId;
+            ProductId = productId;
+            TimesOfVisit = timesOfVisit;
+        }
+
+        public string CusomterId { get; set; }
         public int ProductId { get; set; }
         public int TimesOfVisit { get; set; }
+        public ProductModel Product { get; set; }
+        public CustomerModel Customer { get; set; }
     }
 }

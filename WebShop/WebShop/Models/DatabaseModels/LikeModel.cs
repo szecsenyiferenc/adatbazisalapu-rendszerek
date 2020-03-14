@@ -7,15 +7,17 @@ namespace WebShop.Models.DatabaseModels
 {
     public class LikeModel
     {
-        public LikeModel(int customerId, int productId, bool? isLiked)
+        public LikeModel(string customerId, int productId, bool? isLiked)
         {
             CustomerId = customerId;
             ProductId = productId;
-            this.isLiked = isLiked;
+            IsLiked = isLiked;
         }
 
-        public int CustomerId { get; set; }
+        public string CustomerId { get; set; }
         public int ProductId { get; set; }
-        public bool? isLiked { get; set; }
+        public bool? IsLiked { get; set; }
+        public ProductModel Product { get; set; }
+        public CustomerModel Customer { get; set; }
     }
 }

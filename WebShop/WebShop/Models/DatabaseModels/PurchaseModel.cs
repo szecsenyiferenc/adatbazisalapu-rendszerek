@@ -7,15 +7,17 @@ namespace WebShop.Models.DatabaseModels
 {
     public class PurchaseModel
     {
-        public PurchaseModel(int cusomterId, int productId, StatusModel status)
+        public PurchaseModel(string cusomterId, int productId, StatusModel status)
         {
             CusomterId = cusomterId;
             ProductId = productId;
             Status = status;
         }
 
-        public int CusomterId { get; set; }
+        public string CusomterId { get; set; }
         public int ProductId { get; set; }
         public StatusModel Status { get; set; }
+        public ProductModel Product { get; set; }
+        public CustomerModel Customer { get; set; }
     }
 }

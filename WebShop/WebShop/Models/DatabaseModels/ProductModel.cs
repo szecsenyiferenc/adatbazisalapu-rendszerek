@@ -17,5 +17,9 @@ namespace WebShop.Models.DatabaseModels
         public int Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
+        public List<VisitModel> VisitedProducts { get; set; }
+        public List<PurchaseModel> PurhasedProducts { get; set; }
+        public List<CommentModel> Comments { get; set; }
+        public List<LikeModel> Likes { get; set; }
     }
 }
