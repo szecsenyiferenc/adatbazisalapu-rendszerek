@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebShop.Models
+namespace WebShop.Models.DatabaseModels
 {
-    public class Category
+    public class StatusModel
     {
-        public Category(int id, string name)
+        public StatusModel(int id, string name)
         {
             Id = id;
             Name = name;

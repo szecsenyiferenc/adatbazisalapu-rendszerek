@@ -3,19 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebShop.Models
+namespace WebShop.Models.DatabaseModels
 {
-    public class Product
+    public class CategoryModel
     {
-        public Product(int id, string name, double price)
+        public CategoryModel(int id, string name)
         {
             Id = id;
             Name = name;
-            Price = price;
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public double Price { get; set; }
+        public List<ProductCategoryModel> Products { get; set; }
     }
 }

@@ -34,6 +34,10 @@ namespace WebShop.Models
             {
                 return QueryParamType.Double;
             }
+            if (type == typeof(decimal))
+            {
+                return QueryParamType.Decimal;
+            }
             else
             {
                 return QueryParamType.String;
@@ -48,6 +52,7 @@ namespace WebShop.Models
         String,
         DateTime,
         Boolean,
-        Double
+        Double,
+        Decimal
     }
 }

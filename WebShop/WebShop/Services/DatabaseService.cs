@@ -12,16 +12,34 @@ namespace WebShop.Services
 {
     public class DatabaseService
     {
-        string serverName = "DESKTOP-XXXXXXX";
+        string serverName = "DESKTOP-5FVPMH2";
         string databaseName = "WebShop";
 
         public DatabaseService()
         {
-            var res = GetData<Category>();
-            Console.WriteLine(res);
         }
 
-        private List<T> GetData<T>()
+        public List<CategoryModel> GetAllCategories()
+        {
+            return GetData<CategoryModel>();
+        }
+
+        public List<ProductModel> GetAllProduct()
+        {
+            return GetData<ProductModel>();
+        }
+
+        public List<CustomerModel> GetAllCustomer()
+        {
+            
+        }
+
+        public List<StorageModel> GetAllStorage()
+        {
+            return GetData<StorageModel>();
+        }
+
+        private List<T> GetData<T>(Dictionary<string,string> propertyOverrides = null, Dictionary<string, string> columnOverrides = null)
         {
             var queryParams = new List<QueryParam>();
            
@@ -52,7 +70,7 @@ namespace WebShop.Services
             return str.ToString();
         }
 
-        public T CreateInstance<T>(params object[] paramArray)
+        private T CreateInstance<T>(params object[] paramArray)
         {
             return (T)Activator.CreateInstance(typeof(T), args: paramArray);
         }
@@ -86,6 +104,9 @@ namespace WebShop.Services
                                         break;
                                     case QueryParamType.Double:
                                         paramArray[i] = reader.GetDouble(i);
+                                        break;
+                                    case QueryParamType.Decimal:
+                                        paramArray[i] = reader.GetDecimal(i);
                                         break;
                                     case QueryParamType.String:
                                     default:
