@@ -1,0 +1,14 @@
+.container {
+    max-width: 960px;
+  }
+  
+  .lh-condensed { line-height: 1.25; }
+
+  .center-aligned{
+      margin: auto;
+  }
+
+  .disable-padding{
+    padding: 0px !important;
+    padding-bottom: 24px !important;
+  }

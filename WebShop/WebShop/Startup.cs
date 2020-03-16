@@ -63,7 +63,7 @@ namespace WebShop
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseAngularCliServer(npmScript: "debug");
                 }
             });
         }

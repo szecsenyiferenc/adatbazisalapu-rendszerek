@@ -8,8 +8,8 @@ namespace WebShop.Services.DatabaseServices
 {
     public class DatabaseServiceBase
     {
-        private readonly string serverName = "DESKTOP-5FVPMH2";
-        private readonly string databaseName = "WebShop";
+        protected readonly string serverName = "DESKTOP-5FVPMH2";
+        protected readonly string databaseName = "WebShop";
 
 
 

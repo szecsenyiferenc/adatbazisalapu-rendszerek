@@ -1,0 +1,7 @@
+<ul *ngIf="(products$ | async)">
+  <li *ngFor="let product of (products$ | async)">
+    <p>Id: {{product.id}}</p>
+    <p>Name: {{product.name}}</p>
+    <p>Price: {{product.price}}</p>
+  </li>
+</ul>

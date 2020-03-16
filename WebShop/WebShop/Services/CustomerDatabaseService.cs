@@ -3,13 +3,23 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using WebShop.Models;
 using WebShop.Models.DatabaseModels;
 
 namespace WebShop.Services.DatabaseServices
 {
     public class CustomerDatabaseService : DatabaseServiceBase
     {
-        public List<CustomerModel> GetCustomers()
+        public CustomerModel CheckLogin(LoginData loginData)
+        {
+            CustomerModel customer = GetCustomers(loginData.Email).FirstOrDefault();
+            if(customer != null && customer.Pass == loginData.Password)
+            {
+               return customer;
+            }
+            return null;
+        }
+        public List<CustomerModel> GetCustomers(string email = null)
         {
             string[] columns = new string[]{
                 "Email",
@@ -24,6 +34,7 @@ namespace WebShop.Services.DatabaseServices
                 "HouseNumber"
             };
             string query = $"SELECT {String.Join(",", columns)} FROM Customer";
+            string queryString = email != null ? query + $" WHERE Customer.Email = '{email}';" : query;
             Func<SqlDataReader, CustomerModel> queryFunction = sqlreader =>
             {
                 object[] prop = new object[columns.Length];
@@ -33,7 +44,7 @@ namespace WebShop.Services.DatabaseServices
                 }
                 return CreateInstance<CustomerModel>(prop);
             };
-            return QueryDatabase(query, queryFunction);
+            return QueryDatabase(queryString, queryFunction);
         }
         public List<CustomerModel> GetCustomersWithProperties()
         {
@@ -216,6 +227,41 @@ namespace WebShop.Services.DatabaseServices
                 };
                 customer.Likes = QueryDatabase(query, queryFunction);
             }
+        }
+        public bool AddCustomerToDb(CustomerModel customerModel) 
+        {
+            string[] columns = new string[]{
+                "Email",
+                "Pass",
+                "FirstName",
+                "LastName",
+                "Balance",
+                "Phone",
+                "IsRegularCustomer",
+                "City",
+                "Street",
+                "HouseNumber"
+            };
+            string query = $"INSERT INTO Customer ({String.Join(",", columns)}) VALUES('{customerModel.Email}', '{customerModel.Pass}'," +
+                $"'{customerModel.FirstName}','{customerModel.LastName}',{customerModel.Balance},'{customerModel.Phone}',{ConvertBoolToInt(customerModel.IsRegularCustomer)}," +
+                $"'{customerModel.City}','{customerModel.Street}',{customerModel.HouseNumber})";
+           
+             using (var connection = new System.Data.SqlClient.SqlConnection(@$"Server={serverName};Database={databaseName};Trusted_Connection=True;"))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            return true;
+        }
+
+        public int ConvertBoolToInt(bool value)
+        {
+            return value ? 1 : 0;
         }
     }
 }

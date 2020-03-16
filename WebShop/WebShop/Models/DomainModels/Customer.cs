@@ -7,6 +7,11 @@ namespace WebShop.Models.DomainModels
 {
     public class Customer
     {
+        public Customer()
+        {
+
+        }
+
         public Customer(string email, string firstName, string lastName, decimal balance, 
             string phone, bool isRegularCustomer, string city, string street, int houseNumber, 
             List<VisitedProduct> visitedProducts = null, 

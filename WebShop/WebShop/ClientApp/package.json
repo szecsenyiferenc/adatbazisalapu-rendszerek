@@ -8,7 +8,8 @@
     "build:ssr": "ng run WebShop:server:dev",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "debug": "ng serve --watch"
   },
   "private": true,
   "dependencies": {

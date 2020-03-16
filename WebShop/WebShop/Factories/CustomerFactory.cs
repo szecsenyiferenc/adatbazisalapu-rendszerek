@@ -16,6 +16,13 @@ namespace WebShop.Factories
                 customerModel.City, customerModel.Street, customerModel.HouseNumber);
         }
 
+        public CustomerModel CreateCustomerModel(RegistrationCustomer customerModel)
+        {
+            return new CustomerModel(customerModel.Email, customerModel.Password ,customerModel.FirstName, customerModel.LastName,
+                customerModel.Balance, customerModel.Phone, customerModel.IsRegularCustomer,
+                customerModel.City, customerModel.Street, customerModel.HouseNumber);
+        }
+
         public Product CreateProduct(ProductModel productModel)
         {
             return new Product(productModel.Id, productModel.Name, productModel.Price);
