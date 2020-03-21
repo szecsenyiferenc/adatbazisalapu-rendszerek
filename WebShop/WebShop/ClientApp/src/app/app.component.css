@@ -1,0 +1,8 @@
+.router{
+    position: relative;
+}
+
+app-product{
+    position: relative;
+    width: 100%;
+}

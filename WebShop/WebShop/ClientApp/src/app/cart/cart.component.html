@@ -1,0 +1,23 @@
+<div class="cart-root">
+  <h1>A kosár tartalma</h1>
+  <ul class="list-group cart-items-container" *ngIf="cart.length !== 0">
+    <li class="list-group-item cart-item" *ngFor="let cartItem of cart">
+      <div class="cart-item-type">
+        <img class="cart-item-image" [src]="cartItem.product.image">
+        <div class="cart-item-details">
+          <div class="cart-item-name">
+            {{cartItem.product.name}}
+          </div>
+          <div class="cart-item-count">
+            Darabszám: {{cartItem.count}}
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn btn-primary" (click)="deleteItemFromCart(cartItem)">Törlés</button>
+    </li>
+  </ul>
+  <h2 *ngIf="cart.length === 0">
+    A kosár tartalama üres
+  </h2>
+  <button *ngIf="cart.length !== 0" type="button" class="btn btn-primary order-button" (click)="orderProducts()">Rendelés</button>
+</div>

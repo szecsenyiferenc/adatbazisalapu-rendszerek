@@ -1,0 +1,14 @@
+<div class="card" style="width: 18rem;">
+  <img [src]="product.image" class="card-img-top product-image" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{product.name}}</h5>
+    <p class="card-text">Ár: {{product.price}} Ft</p>
+    <div class="card-buy">
+      <button type="button" (click)="addToCart()" class="btn btn-primary product-button">Kosárba</button>
+      <div>
+        <label class="product-number-label" for="productNumber">Darabszám:</label>
+        <input [(ngModel)]="counter" type="number" min="0" step="1" class="product-number" id="productNumber" max="99">
+      </div>
+    </div>
+  </div>
+</div>

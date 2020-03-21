@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpService } from '../services/http.service';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-product',
@@ -10,10 +10,10 @@ import { HttpService } from '../services/http.service';
 export class ProductComponent implements OnInit {
   products$: Observable<any>
 
-  constructor(private httpService: HttpService) { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit() {
-    this.products$ = this.httpService.getProducts();
+    this.products$ = this.productService.getProducts();
   }
 
 }

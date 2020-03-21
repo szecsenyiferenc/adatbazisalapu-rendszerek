@@ -1,0 +1,16 @@
+.cart-item-container{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.cart-image{
+    height: 30px;
+    width: 30px;
+    object-fit: scale-down;
+}
+
+.cart-details{
+    margin-left: 10px;
+}

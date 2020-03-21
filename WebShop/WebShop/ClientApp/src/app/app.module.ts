@@ -16,6 +16,10 @@ import { ProductComponent } from './product/product.component';
 import { ProductService } from './services/product.service';
 import { AuthGuard } from './guards/auth.guard';
 import { RegistrationComponent } from './registration/registration.component';
+import { ProductCardComponent } from './product/product-card/product-card.component';
+import { CartItemComponent } from './product/cart-item/cart-item.component';
+import { CartComponent } from './cart/cart.component';
+import { UploadProductComponent } from './product/upload-product/upload-product.component';
 
 @NgModule({
    declarations: [
@@ -26,7 +30,11 @@ import { RegistrationComponent } from './registration/registration.component';
       FetchDataComponent,
       LoginComponent,
       ProductComponent,
-      RegistrationComponent
+      RegistrationComponent,
+      ProductCardComponent,
+      CartItemComponent,
+      CartComponent,
+      UploadProductComponent
    ],
    imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,7 +45,9 @@ import { RegistrationComponent } from './registration/registration.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'products', component: ProductComponent, canActivate: [AuthGuard] }
+      { path: 'products', component: ProductComponent, canActivate: [AuthGuard] },
+      { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
+      { path: 'uploadProduct', component: UploadProductComponent, canActivate: [AuthGuard] },
     ])
   ],
   providers: [

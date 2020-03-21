@@ -14,7 +14,8 @@ namespace WebShop.Services.DatabaseServices
             string[] columns = new string[]{
                 "Id",
                 "Name",
-                "Price"
+                "Price",
+                "Image"
             };
             string query = $"SELECT {String.Join(",", columns)} FROM Product";
             Func<SqlDataReader, ProductModel> queryFunction = sqlreader =>
@@ -22,7 +23,9 @@ namespace WebShop.Services.DatabaseServices
                 object[] prop = new object[columns.Length];
                 for (int i = 0; i < prop.Length; i++)
                 {
-                    prop[i] = sqlreader.GetValue(i);
+                    var value = sqlreader.GetValue(i);
+                    value = value.ToString() != "" ? value : null;
+                    prop[i] = value;
                 }
                 return CreateInstance<ProductModel>(prop);
             };

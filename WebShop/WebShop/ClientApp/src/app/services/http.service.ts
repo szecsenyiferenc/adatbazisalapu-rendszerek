@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LoginData } from '../models/login-data.model';
 import { Observable } from 'rxjs';
 import { Customer } from '../models/customer.model';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

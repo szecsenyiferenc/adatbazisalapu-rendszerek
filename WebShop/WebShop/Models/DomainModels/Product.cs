@@ -7,15 +7,17 @@ namespace WebShop.Models.DomainModels
 {
     public class Product
     {
-        public Product(int id, string name, double price)
+        public Product(int id, string name, double price, byte[] image)
         {
             Id = id;
             Name = name;
             Price = price;
+            Image = image;
         }
 
         public int Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
+        public byte[] Image { get; set; }
     }
 }

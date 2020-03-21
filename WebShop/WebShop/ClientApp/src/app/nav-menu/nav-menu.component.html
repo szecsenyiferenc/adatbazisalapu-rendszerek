@@ -36,14 +36,27 @@
             >
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/products']"
               >Products</a
             >
+          </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark" [routerLink]="['/uploadProduct']"
+              >Upload product</a
+            >
+          </li>
+          <li class="nav-item dropdown" [routerLinkActive]="['link-active']">
+            <a class="nav-link text-dark cart dropbtn" [routerLink]="['/cart']"
+              >Cart</a
+            >
+            <ul *ngIf="cartItems.length !== 0" class="list-group dropdown-content">
+              <li class="list-group-item noselect" *ngFor="let cartItem of cartItems">
+                <app-cart-item [cartItem]="cartItem"></app-cart-item>
+              </li>
+            </ul>
+            <ul *ngIf="cartItems.length === 0" class="list-group dropdown-content">
+              <li class="list-group-item noselect">Üres kosár</li>
+            </ul>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <button class="btn btn-primary" [routerLink]="['/login']" type="button" *ngIf="!(loginService.customer$ | async)">Login</button>

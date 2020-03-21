@@ -25,17 +25,17 @@ namespace WebShop.Factories
 
         public Product CreateProduct(ProductModel productModel)
         {
-            return new Product(productModel.Id, productModel.Name, productModel.Price);
+            return new Product(productModel.Id, productModel.Name, productModel.Price, productModel.Image);
         }
 
         public VisitedProduct CreateVisitedProducts(ProductModel productModel, int timesOfVisit)
         {
-            return new VisitedProduct(productModel.Id, productModel.Name, productModel.Price, timesOfVisit);
+            return new VisitedProduct(productModel.Id, productModel.Name, productModel.Price, productModel.Image, timesOfVisit);
         }
 
         public PurchasedProduct CreateProduct(ProductModel productModel, string category)
         {
-            return new PurchasedProduct(productModel.Id, productModel.Name, productModel.Price, category);
+            return new PurchasedProduct(productModel.Id, productModel.Name, productModel.Price, productModel.Image, category);
         }
 
         public Comment CreateComment(CommentModel commentModel)

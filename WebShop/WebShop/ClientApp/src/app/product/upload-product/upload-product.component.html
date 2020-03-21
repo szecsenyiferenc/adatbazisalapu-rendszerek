@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="py-5 text-center disable-padding">
+    <h2>Termék feltöltése</h2>
+  </div>
+
+  <div class="row">
+    </div>
+    <div class="col-md-8 order-md-1 center-aligned">
+      <form class="needs-validation" #f="ngForm" (ngSubmit)="submit(f)">
+        <div class="mb-3">
+          <label for="address">Termék neve</label>
+          <input type="text" 
+          class="form-control" 
+          id="city" 
+          placeholder="Terméknév" 
+          ngModel
+          #city="ngModel"
+          name="city"
+          required>
+          <div class="invalid-feedback">
+            Please enter your shipping address.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="address">Termék ára</label>
+          <input type="text" 
+          class="form-control" 
+          id="houseNumber" 
+          placeholder="Ár" 
+          ngModel
+          #houseNumber="ngModel"
+          name="houseNumber"
+          required>
+          <div class="invalid-feedback">
+            Please enter your shipping address.
+          </div>
+        </div>
+        <form>
+          <div class="form-group">
+            <label for="exampleFormControlFile1">Kép feltöltése</label>
+            <input (change)="preview(imageFile)" type="file" class="form-control-file" id="exampleFormControlFile1" name="imageFile" #imageFile accept="image/*">
+          </div>
+        </form>
+        <div *ngIf="imgURL" class="upload-product-image-container">
+          <img [src]="imgURL" class="upload-product-image">
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="button" (click)="log()">Feltöltés</button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">&copy; 2017-2019 Company Name</p>
+  </footer>

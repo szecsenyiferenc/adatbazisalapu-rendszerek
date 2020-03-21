@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../services/login.service';
+import { ProductService } from '../services/product.service';
+import { CartItem } from '../models/cart-item.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-nav-menu',
@@ -8,9 +11,10 @@ import { LoginService } from '../services/login.service';
 })
 export class NavMenuComponent {
   isExpanded = false;
+  cartItems: CartItem[];
 
-  constructor(private loginService: LoginService){
-    
+  constructor(private loginService: LoginService, private productService: ProductService){
+    this.cartItems = this.productService.cart;
   }
 
   collapse() {

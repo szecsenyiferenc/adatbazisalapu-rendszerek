@@ -7,8 +7,8 @@ namespace WebShop.Models.DomainModels
 {
     public class VisitedProduct : Product
     {
-        public VisitedProduct(int id, string name, double price, int timesOfVisit)
-            : base(id, name, price)
+        public VisitedProduct(int id, string name, double price, byte[] image, int timesOfVisit)
+            : base(id, name, price, image)
         {
             TimesOfVisit = timesOfVisit;
         }

@@ -258,7 +258,6 @@ namespace WebShop.Services.DatabaseServices
 
             return true;
         }
-
         public int ConvertBoolToInt(bool value)
         {
             return value ? 1 : 0;
