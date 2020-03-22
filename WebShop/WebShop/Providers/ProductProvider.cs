@@ -26,5 +26,11 @@ namespace WebShop.Providers
 
             return products;
         }
+
+        public bool AddProductToDatabase(Product product)
+        {
+            var productModel = factory.CreateProductModel(product);
+            return db.Products.AddProductToDatabase(productModel);
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using WebShop.Models;
 
 namespace WebShop.Services.DatabaseServices
 {
@@ -43,5 +44,37 @@ namespace WebShop.Services.DatabaseServices
                 return result;
             }
         }
+
+        protected bool ExecuteQuery(string query, List<SqlQueryParam> parameters = null)
+        {
+            try
+            {
+                using (var connection = new System.Data.SqlClient.SqlConnection(@$"Server={serverName};Database={databaseName};Trusted_Connection=True;"))
+                {
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        if(parameters != null)
+                        {
+                            foreach (var parameter in parameters)
+                            {
+                                SqlParameter param = command.Parameters.Add(parameter.ParameterName, parameter.DbType);
+                                param.Value = parameter.Value;
+                            }
+                        }
+
+                        command.ExecuteNonQuery();
+                    }
+                    return true;
+                }
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+            
+        }
+
     }
 }

@@ -28,6 +28,11 @@ namespace WebShop.Factories
             return new Product(productModel.Id, productModel.Name, productModel.Price, productModel.Image);
         }
 
+        public ProductModel CreateProductModel(Product product)
+        {
+            return new ProductModel(product.Id, product.Name, product.Price, product.Image);
+        }
+
         public VisitedProduct CreateVisitedProducts(ProductModel productModel, int timesOfVisit)
         {
             return new VisitedProduct(productModel.Id, productModel.Name, productModel.Price, productModel.Image, timesOfVisit);

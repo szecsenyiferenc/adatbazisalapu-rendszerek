@@ -4,6 +4,7 @@ import { LoginData } from '../models/login-data.model';
 import { Observable } from 'rxjs';
 import { Customer } from '../models/customer.model';
 import { tap } from 'rxjs/operators';
+import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,11 @@ registerUser(customer: Customer){
 
 getAllCustomers(){
   return this.http.get(this.baseUrl + 'weatherforecast');
+}
+
+uploadProduct(product: Product): Observable<any>{
+  let headers = new HttpHeaders({'Content-Type': 'application/json'});
+  return this.http.post(this.baseUrl + 'api/product', JSON.stringify(product), {headers});
 }
 
 }

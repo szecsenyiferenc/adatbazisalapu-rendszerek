@@ -23,31 +23,23 @@
         [ngClass]="{ show: isExpanded }"
       >
         <ul class="navbar-nav flex-grow">
-          <li
-            class="nav-item"
-            [routerLinkActive]="['link-active']"
-            [routerLinkActiveOptions]="{ exact: true }"
+          <li 
+          class="nav-item" 
+          [routerLinkActive]="['link-active']"
+          [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/products']"
-              >Products</a
+              >Termékek</a
             >
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/uploadProduct']"
-              >Upload product</a
+              >Termék feltöltése</a
             >
           </li>
           <li class="nav-item dropdown" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark cart dropbtn" [routerLink]="['/cart']"
-              >Cart</a
+              >Kosár</a
             >
             <ul *ngIf="cartItems.length !== 0" class="list-group dropdown-content">
               <li class="list-group-item noselect" *ngFor="let cartItem of cartItems">
@@ -59,8 +51,8 @@
             </ul>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <button class="btn btn-primary" [routerLink]="['/login']" type="button" *ngIf="!(loginService.customer$ | async)">Login</button>
-            <button class="btn btn-primary" (click)="logout()" [routerLink]="['/']" type="button" *ngIf="(loginService.customer$ | async)">Logout</button>
+            <button class="btn btn-primary login-button" [routerLink]="['/login']" type="button" *ngIf="!(loginService.customer$ | async)">Bejelentkezés</button>
+            <button class="btn btn-primary login-button" (click)="logout()" [routerLink]="['/']" type="button" *ngIf="(loginService.customer$ | async)">Kijelentkezés</button>
           </li>
         </ul>
       </div>

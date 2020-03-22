@@ -1,0 +1,33 @@
+.single-product-root{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+}
+
+.single-product-container{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.single-product-image{
+    height: 450px;
+    width: 450px;
+    object-fit: scale-down;
+}
+
+.card-buy{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.product-number {
+    margin-left: 4px;
+    height: 25px;
+    width: 40px;
+}
+
+.product-number-label{
+    margin-bottom: 0px;
+}

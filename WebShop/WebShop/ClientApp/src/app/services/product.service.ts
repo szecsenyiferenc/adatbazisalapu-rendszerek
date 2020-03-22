@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { Product } from '../models/product.model';
 import { CartItem } from '../models/cart-item.model';
 
@@ -10,6 +10,7 @@ import { CartItem } from '../models/cart-item.model';
 })
 export class ProductService {
   cart: CartItem[];
+  products: Product[];
 
 constructor(private httpService: HttpService) { 
   this.cart = [];
@@ -24,7 +25,15 @@ getProducts(): Observable<Product[]>{
       }
       return product;
     })
-  }))
+  }),
+  tap(products => this.products = products)
+  )
+}
+
+getProductById(id: string): Observable<Product>{
+  let selectedProduct = this.products.find(p => p.id === +id);
+  console.log("PRODUCT", selectedProduct);
+  return of(selectedProduct);
 }
 
 addItemToCart(product: Product, count: number){
@@ -42,6 +51,10 @@ deleteItemFromCart(cartItem: CartItem){
   if (index > -1) {
     this.cart.splice(index, 1);
   }
+}
+
+uploadProduct(product: Product): Observable<any>{
+  return this.httpService.uploadProduct(product);
 }
 
 }

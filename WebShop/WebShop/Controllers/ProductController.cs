@@ -14,6 +14,7 @@ namespace WebShop.Controllers
     public class ProductController : ControllerBase
     {
         ProductProvider productProvider = new ProductProvider();
+        
         // GET: api/Product
         [HttpGet]
         public List<Product> Get()
@@ -30,8 +31,9 @@ namespace WebShop.Controllers
 
         // POST: api/Product
         [HttpPost]
-        public void Post([FromBody] string value)
+        public bool Post([FromBody] Product product)
         {
+            return productProvider.AddProductToDatabase(product);
         }
 
         // PUT: api/Product/5

@@ -1,3 +1,8 @@
+.product-container{
+    align-self: stretch;
+    height: 100%;
+}
+
 .product-image{
     height: 200px;
     width: 200px;
@@ -5,6 +10,15 @@
     margin-right: auto;
     object-fit: scale-down;
 }
+
+.product-image:hover{
+    cursor: pointer;
+}
+
+.product-name:hover{
+    cursor: pointer;
+}
+
 
 .card-buy{
     display: flex;

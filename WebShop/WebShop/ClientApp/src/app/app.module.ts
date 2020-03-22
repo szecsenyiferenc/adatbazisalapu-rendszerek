@@ -20,6 +20,7 @@ import { ProductCardComponent } from './product/product-card/product-card.compon
 import { CartItemComponent } from './product/cart-item/cart-item.component';
 import { CartComponent } from './cart/cart.component';
 import { UploadProductComponent } from './product/upload-product/upload-product.component';
+import { SingleProductComponent } from './product/single-product/single-product.component';
 
 @NgModule({
    declarations: [
@@ -34,17 +35,17 @@ import { UploadProductComponent } from './product/upload-product/upload-product.
       ProductCardComponent,
       CartItemComponent,
       CartComponent,
-      UploadProductComponent
+      UploadProductComponent,
+      SingleProductComponent
    ],
    imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: '', component: ProductComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
+      { path: 'products/:id', component: SingleProductComponent, canActivate: [AuthGuard] },
       { path: 'products', component: ProductComponent, canActivate: [AuthGuard] },
       { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
       { path: 'uploadProduct', component: UploadProductComponent, canActivate: [AuthGuard] },

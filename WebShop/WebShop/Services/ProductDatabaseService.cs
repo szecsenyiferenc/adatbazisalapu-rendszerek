@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using WebShop.Models;
 using WebShop.Models.DatabaseModels;
 
 namespace WebShop.Services.DatabaseServices
@@ -240,5 +242,22 @@ namespace WebShop.Services.DatabaseServices
                 product.Likes = QueryDatabase(query, queryFunction);
             }
         }
+
+        public bool AddProductToDatabase(ProductModel productModel)
+        {
+            string[] columns = new string[]{
+                "Name",
+                "Price",
+                "Image"
+            };
+            string query = $"INSERT INTO Product ({String.Join(",", columns)}) VALUES('{productModel.Name}',{productModel.Price}, @imagebinary)";
+
+            SqlQueryParam param = new SqlQueryParam("@imagebinary", SqlDbType.VarBinary, productModel.Image);
+            var paramList = new List<SqlQueryParam>() { param };
+
+            return ExecuteQuery(query, paramList);
+        }
+
+
     }
 }

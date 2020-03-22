@@ -245,16 +245,8 @@ namespace WebShop.Services.DatabaseServices
             string query = $"INSERT INTO Customer ({String.Join(",", columns)}) VALUES('{customerModel.Email}', '{customerModel.Pass}'," +
                 $"'{customerModel.FirstName}','{customerModel.LastName}',{customerModel.Balance},'{customerModel.Phone}',{ConvertBoolToInt(customerModel.IsRegularCustomer)}," +
                 $"'{customerModel.City}','{customerModel.Street}',{customerModel.HouseNumber})";
-           
-             using (var connection = new System.Data.SqlClient.SqlConnection(@$"Server={serverName};Database={databaseName};Trusted_Connection=True;"))
-            {
-                connection.Open();
 
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.ExecuteNonQuery();
-                }
-            }
+            ExecuteQuery(query);
 
             return true;
         }

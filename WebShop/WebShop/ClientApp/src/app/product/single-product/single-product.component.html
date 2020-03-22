@@ -1,0 +1,16 @@
+<div class="single-product-root">
+  <div class="single-product-container" *ngIf="(product$ | async) as product">
+    <img [src]="product.image" class="single-product-image" alt="...">
+    <div>
+      <h5>{{product.name}}</h5>
+      <p>Ár: {{product.price}} Ft</p>
+    </div>
+    <div class="card-buy">
+      <button type="button" (click)="addToCart()" class="btn btn-primary product-button">Kosárba</button>
+      <div>
+        <label class="product-number-label" for="productNumber">Darabszám:</label>
+        <input [(ngModel)]="counter" type="number" min="0" step="1" class="product-number" id="productNumber" max="99">
+      </div>
+    </div>
+  </div>
+</div>
