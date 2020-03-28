@@ -23,3 +23,14 @@
 textarea {
     resize: none;
 }
+
+.button-container{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+}
+
+.button-container button{
+    margin: 4px;
+    margin-right: 0px;
+}

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -49,6 +49,7 @@ import { CommentComponent } from './product/comment/comment.component';
     RouterModule.forRoot([
       { path: '', component: ProductComponent, pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
+      { path: 'registration', component: RegistrationComponent },
       { path: 'products/:id', component: SingleProductComponent, canActivate: [AuthGuard] },
       { path: 'products', component: ProductComponent, canActivate: [AuthGuard] },
       { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },

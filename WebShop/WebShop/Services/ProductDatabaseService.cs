@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebShop.Models;
 using WebShop.Models.DatabaseModels;
+using WebShop.Models.DomainModels;
 
 namespace WebShop.Services.DatabaseServices
 {
@@ -113,7 +114,7 @@ namespace WebShop.Services.DatabaseServices
             foreach (var product in products)
             {
                 string query = $"SELECT {String.Join(",", columns)},{String.Join(",", customers)} FROM PurchasedProducts, Status, Customer " +
-                    $"WHERE PurchasedProducts.ProductId = '{product.Id}' " + 
+                    $"WHERE PurchasedProducts.ProductId = '{product.Id}' " +
                     "AND PurchasedProducts.StatusId = Status.Id " +
                     "AND PurchasedProducts.UserId = Customer.Email;"; ;
                 Func<SqlDataReader, PurchaseModel> queryFunction = sqlreader =>
@@ -242,7 +243,6 @@ namespace WebShop.Services.DatabaseServices
                 product.Likes = QueryDatabase(query, queryFunction);
             }
         }
-
         public bool AddProductToDatabase(ProductModel productModel)
         {
             string[] columns = new string[]{
@@ -256,6 +256,84 @@ namespace WebShop.Services.DatabaseServices
             var paramList = new List<SqlQueryParam>() { param };
 
             return ExecuteQuery(query, paramList);
+        }
+
+        public bool AddCommentsToDatabase(Comment comment)
+        {
+            string[] columns = new string[]{
+                "UserId",
+                "ProductId",
+                "CommentTime",
+                "CommentText"
+            };
+            string query = $"INSERT INTO Comment ({String.Join(",", columns)}) VALUES('{comment.Customer.Email}', {comment.Product.Id}," +
+                $" '{comment.DateTime.ToString("yyyy-MM-dd HH:mm:ss.fff")}', '{comment.Text}')";
+
+
+            return ExecuteQuery(query);
+        }
+
+        public List<CommentModel> GetCommentsFromProduct(int productId)
+        {
+            string[] columns = new string[]{
+                "UserId",
+                "ProductId",
+                "CommentTime",
+                "CommentText"
+            };
+            string query = $"SELECT {String.Join(",", columns)} FROM Comment WHERE ProductId = {productId}";
+            Func<SqlDataReader, CommentModel> queryFunction = sqlreader =>
+            {
+                object[] prop = new object[columns.Length];
+                for (int i = 0; i < prop.Length; i++)
+                {
+                    var value = sqlreader.GetValue(i);
+                    value = value.ToString() != "" ? value : null;
+                    prop[i] = value;
+                }
+                return CreateInstance<CommentModel>(prop);
+            };
+            return QueryDatabase(query, queryFunction);
+        }
+
+        public List<CommentModel> GetCommentsFromProductWithProperties(int productId)
+        {
+            var comment = GetCommentsFromProduct(productId);
+            AddCustomersToComments(comment);
+            return comment;
+        }
+
+        public void AddCustomersToComments(List<CommentModel> comments)
+        {
+            string[] customers = new string[]
+            {
+                "Email",
+                "Pass",
+                "FirstName",
+                "LastName",
+                "Balance",
+                "Phone",
+                "IsRegularCustomer",
+                "City",
+                "Street",
+                "HouseNumber"
+            };
+            foreach (var comment in comments)
+            {
+                string query = $"SELECT {String.Join(",", customers)} FROM Customer " +
+                    "JOIN Comment " +
+                    "ON Customer.Email = Comment.UserId;";
+                Func<SqlDataReader, CustomerModel> queryFunction = sqlreader =>
+                {
+                    object[] prop = new object[customers.Length];
+                    for (int i = 0; i < prop.Length; i++)
+                    {
+                        prop[i] = sqlreader.GetValue(i);
+                    }
+                    return CreateInstance<CustomerModel>(prop);
+                };
+                comment.Customer = QueryDatabase(query, queryFunction)[0];
+            }
         }
 
 

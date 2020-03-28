@@ -14,11 +14,9 @@
     </div>
   </div>
   <div class="comment-container">
-    <!-- <div class="comment-write-container">
-      <div>Hello</div>
-      <textarea class="comment-write-textarea"></textarea>
-    </div> -->
-    <app-comment [comment]="comment" [isNewComment]="true" *ngFor="let comment of comments"></app-comment>
-    <app-comment [comment]="comment" [isNewComment]="false" *ngFor="let comment of comments"></app-comment>
+    <app-comment *ngIf="customerComment.customer" (reload)="reload()" [product]="product" [comment]="customerComment" [isNewComment]="true"></app-comment>
+    <ng-container *ngIf="comments">
+      <app-comment [comment]="comment" [isNewComment]="false" *ngFor="let comment of comments"></app-comment>
+    </ng-container>
   </div>
 </div>

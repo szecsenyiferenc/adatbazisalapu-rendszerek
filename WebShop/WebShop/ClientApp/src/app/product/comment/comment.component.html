@@ -1,12 +1,15 @@
 <div class="comment-container">
   <div class="comment-write-details">
-    <div class="comment-writer">{{comment.writer}}</div>
-    <div class="comment-datetime" *ngIf="!isNewComment">{{comment.writer}}</div>
+    <div class="comment-writer">{{comment.customer.email}}</div>
+    <div class="comment-datetime" *ngIf="!isNewComment">{{comment.dateTime | date:'medium'}}</div>
   </div>
   <ng-container *ngIf="isNewComment">
-    <textarea class="comment-text"></textarea>
+    <textarea [(ngModel)]="commentField" class="comment-text"></textarea>
   </ng-container>
   <ng-container *ngIf="!isNewComment">
     <textarea readonly disabled class="comment-text">{{comment.text}}</textarea>
   </ng-container>
+  <div class="button-container">
+    <button *ngIf="isNewComment" type="button" (click)="sendComment()" class="btn btn-primary product-button">Komment</button>
+  </div>
 </div>

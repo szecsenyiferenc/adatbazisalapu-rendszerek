@@ -19,5 +19,8 @@
   <h2 *ngIf="cart.length === 0">
     A kosár tartalama üres
   </h2>
-  <button *ngIf="cart.length !== 0" type="button" class="btn btn-primary order-button" (click)="orderProducts()">Rendelés</button>
+  <h2 *ngIf="cart.length !== 0 && !(customer$ | async)">
+    A rendeléshez jelentkezzen be
+  </h2>
+  <button *ngIf="cart.length !== 0 && (customer$ | async)" type="button" class="btn btn-primary order-button" (click)="orderProducts()">Rendelés</button>
 </div>

@@ -32,5 +32,23 @@ namespace WebShop.Providers
             var productModel = factory.CreateProductModel(product);
             return db.Products.AddProductToDatabase(productModel);
         }
+
+        public bool AddCommentToDatabase(Comment comment)
+        {
+            return db.Products.AddCommentsToDatabase(comment);
+        }
+
+        public List<Comment> GetCommentsFromDatabase(int productId)
+        {
+            var commentModels = db.Products.GetCommentsFromProductWithProperties(productId);
+            var comment = new List<Comment>();
+
+            foreach (var commentModel in commentModels)
+            {
+                comment.Add(factory.CreateComment(commentModel));
+            }
+
+            return comment;
+        }
     }
 }

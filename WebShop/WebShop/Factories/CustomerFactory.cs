@@ -25,6 +25,10 @@ namespace WebShop.Factories
 
         public Product CreateProduct(ProductModel productModel)
         {
+            if(productModel == null)
+            {
+                return null;
+            }
             return new Product(productModel.Id, productModel.Name, productModel.Price, productModel.Image);
         }
 
@@ -45,7 +49,7 @@ namespace WebShop.Factories
 
         public Comment CreateComment(CommentModel commentModel)
         {
-            return new Comment(commentModel.Time, commentModel.Text);
+            return new Comment(CreateCustomer(commentModel.Customer), CreateProduct(commentModel.Product),commentModel.Time, commentModel.Text);
         }
 
     }

@@ -54,6 +54,9 @@
             <button class="btn btn-primary login-button" [routerLink]="['/login']" type="button" *ngIf="!(loginService.customer$ | async)">Bejelentkezés</button>
             <button class="btn btn-primary login-button" (click)="logout()" [routerLink]="['/']" type="button" *ngIf="(loginService.customer$ | async)">Kijelentkezés</button>
           </li>
+          <li class="nav-item" [routerLinkActive]="['link-active']">
+            <button class="btn btn-primary login-button" [routerLink]="['/registration']" type="button" *ngIf="!(loginService.customer$ | async)">Regisztráció</button>
+          </li>
         </ul>
       </div>
     </div>
