@@ -73,7 +73,46 @@ namespace WebShop.Services.DatabaseServices
             {
                 return false;
             }
-            
+        }
+
+        protected int InsertQuery(string query, List<SqlQueryParam> parameters = null)
+        {
+            try
+            {
+                using (var connection = new System.Data.SqlClient.SqlConnection(@$"Server={serverName};Database={databaseName};Trusted_Connection=True;"))
+                {
+                    connection.Open();
+                    int id = -1;
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        if (parameters != null)
+                        {
+                            foreach (var parameter in parameters)
+                            {
+                                SqlParameter param = command.Parameters.Add(parameter.ParameterName, parameter.DbType);
+                                param.Value = parameter.Value;
+                            }
+                        }
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                id = (int)reader.GetDecimal(0);
+                            }
+                        }
+
+                        //object result = command.ExecuteScalar();
+                        //id = Convert.ToInt32(result);
+                    }
+                    return id;
+                }
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
         }
 
     }

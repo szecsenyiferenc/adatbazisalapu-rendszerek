@@ -22,7 +22,8 @@ export class CartComponent implements OnInit {
   }
 
   orderProducts(){
-    
+    console.log(this.cart);
+    this.productService.uploadCart(this.cart).subscribe(a => console.log(a));
   }
 
 }

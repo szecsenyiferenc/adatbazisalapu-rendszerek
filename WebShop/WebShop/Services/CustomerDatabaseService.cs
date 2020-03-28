@@ -50,7 +50,7 @@ namespace WebShop.Services.DatabaseServices
         {
             var customers = GetCustomers();
             AddVisitedProductsToCustomers(customers);
-            AddPurhasedProductsToCustomers(customers);
+            //AddPurhasedProductsToCustomers(customers);
             AddCommentsToCustomers(customers);
             AddLikesToCustomers(customers);
             return customers;

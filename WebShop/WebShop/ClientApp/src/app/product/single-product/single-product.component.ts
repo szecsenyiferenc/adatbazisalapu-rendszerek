@@ -14,6 +14,7 @@ export class SingleProductComponent implements OnInit {
   product$: Observable<Product>;
   product: Product;
   counter: number;
+  comments: {writer: string, text: string}[];
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +33,10 @@ export class SingleProductComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.comments = [
+      {writer: "ASD", text:"Helloka asdasd  \n asd \n asd \n asdasd"},
+      {writer: "BSD", text:"Szia asdasd asdasd"}
+    ]
   }
 
   addToCart(){

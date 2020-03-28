@@ -37,7 +37,7 @@ namespace WebShop.Services.DatabaseServices
         {
             var products = GetProducts();
             AddVisitedProductsToProducts(products);
-            AddPurhasedProductsToProducts(products);
+            //AddPurhasedProductsToProducts(products);
             AddCommentsToProducts(products);
             AddLikesToProducts(products);
             return products;

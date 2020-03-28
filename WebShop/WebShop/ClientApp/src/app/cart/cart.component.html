@@ -3,13 +3,13 @@
   <ul class="list-group cart-items-container" *ngIf="cart.length !== 0">
     <li class="list-group-item cart-item" *ngFor="let cartItem of cart">
       <div class="cart-item-type">
-        <img class="cart-item-image" [src]="cartItem.product.image">
+        <img class="cart-item-image" [src]="cartItem.product.image | image">
         <div class="cart-item-details">
           <div class="cart-item-name">
             {{cartItem.product.name}}
           </div>
           <div class="cart-item-count">
-            Darabszám: {{cartItem.count}}
+            Darabszám: {{cartItem.quantity}}
           </div>
         </div>
       </div>

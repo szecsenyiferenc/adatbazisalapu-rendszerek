@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { Customer } from '../models/customer.model';
 import { tap } from 'rxjs/operators';
 import { Product } from '../models/product.model';
+import { CartItem } from '../models/cart-item.model';
+import { Cart } from '../models/cart.model';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +39,11 @@ getAllCustomers(){
 uploadProduct(product: Product): Observable<any>{
   let headers = new HttpHeaders({'Content-Type': 'application/json'});
   return this.http.post(this.baseUrl + 'api/product', JSON.stringify(product), {headers});
+}
+
+uploadCart(product: Cart): Observable<any>{
+  let headers = new HttpHeaders({'Content-Type': 'application/json'});
+  return this.http.post(this.baseUrl + 'api/cart', JSON.stringify(product), {headers});
 }
 
 }

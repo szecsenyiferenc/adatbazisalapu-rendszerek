@@ -1,0 +1,12 @@
+<div class="comment-container">
+  <div class="comment-write-details">
+    <div class="comment-writer">{{comment.writer}}</div>
+    <div class="comment-datetime" *ngIf="!isNewComment">{{comment.writer}}</div>
+  </div>
+  <ng-container *ngIf="isNewComment">
+    <textarea class="comment-text"></textarea>
+  </ng-container>
+  <ng-container *ngIf="!isNewComment">
+    <textarea readonly disabled class="comment-text">{{comment.text}}</textarea>
+  </ng-container>
+</div>

@@ -21,6 +21,8 @@ import { CartItemComponent } from './product/cart-item/cart-item.component';
 import { CartComponent } from './cart/cart.component';
 import { UploadProductComponent } from './product/upload-product/upload-product.component';
 import { SingleProductComponent } from './product/single-product/single-product.component';
+import { ImagePipe } from './pipes/image.pipe';
+import { CommentComponent } from './product/comment/comment.component';
 
 @NgModule({
    declarations: [
@@ -36,7 +38,9 @@ import { SingleProductComponent } from './product/single-product/single-product.
       CartItemComponent,
       CartComponent,
       UploadProductComponent,
-      SingleProductComponent
+      SingleProductComponent,
+      ImagePipe,
+      CommentComponent
    ],
    imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

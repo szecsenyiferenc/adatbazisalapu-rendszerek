@@ -1,6 +1,6 @@
 <div class="single-product-root">
   <div class="single-product-container" *ngIf="(product$ | async) as product">
-    <img [src]="product.image" class="single-product-image" alt="...">
+    <img [src]="product.image | image" class="single-product-image" alt="...">
     <div>
       <h5>{{product.name}}</h5>
       <p>Ár: {{product.price}} Ft</p>
@@ -12,5 +12,13 @@
         <input [(ngModel)]="counter" type="number" min="0" step="1" class="product-number" id="productNumber" max="99">
       </div>
     </div>
+  </div>
+  <div class="comment-container">
+    <!-- <div class="comment-write-container">
+      <div>Hello</div>
+      <textarea class="comment-write-textarea"></textarea>
+    </div> -->
+    <app-comment [comment]="comment" [isNewComment]="true" *ngFor="let comment of comments"></app-comment>
+    <app-comment [comment]="comment" [isNewComment]="false" *ngFor="let comment of comments"></app-comment>
   </div>
 </div>
