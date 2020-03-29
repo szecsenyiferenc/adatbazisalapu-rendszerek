@@ -12,4 +12,5 @@ export interface Customer{
     purchasedProducts?: any[];
     comments?: any[];
     likes?: any[];
+    isAdmin: boolean;
 }

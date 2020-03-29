@@ -8,6 +8,7 @@ import { Product } from '../models/product.model';
 import { CartItem } from '../models/cart-item.model';
 import { Cart } from '../models/cart.model';
 import { ProductComment } from '../models/comment.model';
+import { Like } from '../models/like.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,7 @@ export class HttpService {
 
   registerUser(customer: Customer) {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post(this.baseUrl + 'api/register', JSON.stringify(customer), { headers }).subscribe(a => console.log(a));
+    return this.http.post(this.baseUrl + 'api/register', JSON.stringify(customer), { headers });
   }
 
   getAllCustomers() {
@@ -55,5 +56,16 @@ export class HttpService {
     return this.http.get(this.baseUrl + `api/comment/${product.id}`);
   }
 
+  setLike(like: Like){
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(this.baseUrl + 'api/like', JSON.stringify(like), { headers });
+  }
 
+  getLikes(customer: Customer): Observable<any>{
+    return this.http.get(this.baseUrl + `api/like/${customer.email}`);
+  }
+
+  getCartByUser(customer: Customer): Observable<any>{
+    return this.http.get(this.baseUrl + `api/cart/${customer.email}`);
+  }
 }

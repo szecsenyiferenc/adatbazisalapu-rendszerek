@@ -1,0 +1,4 @@
+<div *ngIf="(customer$ | async)" class="single-product-like-container">
+  <i class="fa fa-thumbs-up single-product-opinion single-product-like" [ngClass]="(like !== null)?(like ? 'like-active' : 'like-deactive'):'like-deactive'" (click)="setLike(true)"></i>
+  <i class="fa fa-thumbs-up single-product-opinion single-product-dislike" [ngClass]="(like !== null)?(like ? 'like-deactive' : 'like-active'):'like-deactive'" (click)="setLike(false)"></i>
+</div>

@@ -61,7 +61,8 @@ namespace WebShop.Services.DatabaseServices
                 "IsRegularCustomer",
                 "City",
                 "Street",
-                "HouseNumber"
+                "HouseNumber",
+                "IsAdmin"
             };
             foreach (var product in products)
             {
@@ -81,7 +82,9 @@ namespace WebShop.Services.DatabaseServices
                     object[] prop2 = new object[customers.Length];
                     for (int i = prop.Length; i < (prop.Length + prop2.Length); i++)
                     {
-                        prop2[i - prop.Length] = sqlreader.GetValue(i);
+                        var value = sqlreader.GetValue(i);
+                        value = value.ToString() != "" ? value : null;
+                        prop2[i - prop.Length] = value;
                     }
                     var visited = CreateInstance<VisitModel>(prop);
                     visited.Customer = CreateInstance<CustomerModel>(prop2);
@@ -139,7 +142,9 @@ namespace WebShop.Services.DatabaseServices
                     object[] prop2 = new object[customers.Length];
                     for (int i = prop.Length; i < (prop.Length + prop2.Length); i++)
                     {
-                        prop2[i - prop.Length] = sqlreader.GetValue(i + 1);
+                        var value = sqlreader.GetValue(i + 1);
+                        value = value.ToString() != "" ? value : null;
+                        prop2[i - prop.Length] = value;
                     }
                     var purchased = CreateInstance<PurchaseModel>(prop);
                     purchased.Customer = CreateInstance<CustomerModel>(prop2);
@@ -167,7 +172,8 @@ namespace WebShop.Services.DatabaseServices
                 "IsRegularCustomer",
                 "City",
                 "Street",
-                "HouseNumber"
+                "HouseNumber",
+                "IsAdmin"
             };
             foreach (var product in products)
             {
@@ -187,7 +193,9 @@ namespace WebShop.Services.DatabaseServices
                     object[] prop2 = new object[customers.Length];
                     for (int i = prop.Length; i < (prop.Length + prop2.Length); i++)
                     {
-                        prop2[i - prop.Length] = sqlreader.GetValue(i);
+                        var value = sqlreader.GetValue(i);
+                        value = value.ToString() != "" ? value : null;
+                        prop2[i - prop.Length] = value;
                     }
                     var comments = CreateInstance<CommentModel>(prop);
                     comments.Customer = CreateInstance<CustomerModel>(prop2);
@@ -214,7 +222,8 @@ namespace WebShop.Services.DatabaseServices
                 "IsRegularCustomer",
                 "City",
                 "Street",
-                "HouseNumber"
+                "HouseNumber",
+                "IsAdmin"
             };
             foreach (var product in products)
             {
@@ -229,12 +238,16 @@ namespace WebShop.Services.DatabaseServices
                     object[] prop = new object[columns.Length];
                     for (int i = 0; i < prop.Length; i++)
                     {
-                        prop[i] = sqlreader.GetValue(i);
+                        var value = sqlreader.GetValue(i);
+                        value = value.ToString() != "" ? value : null;
+                        prop[i] = value;
                     }
                     object[] prop2 = new object[customers.Length];
                     for (int i = prop.Length; i < (prop.Length + prop2.Length); i++)
                     {
-                        prop2[i - prop.Length] = sqlreader.GetValue(i);
+                        var value = sqlreader.GetValue(i);
+                        value = value.ToString() != "" ? value : null;
+                        prop2[i - prop.Length] = value;
                     }
                     var likes = CreateInstance<LikeModel>(prop);
                     likes.Customer = CreateInstance<CustomerModel>(prop2);
@@ -316,19 +329,23 @@ namespace WebShop.Services.DatabaseServices
                 "IsRegularCustomer",
                 "City",
                 "Street",
-                "HouseNumber"
+                "HouseNumber",
+                "IsAdmin"
             };
             foreach (var comment in comments)
             {
                 string query = $"SELECT {String.Join(",", customers)} FROM Customer " +
                     "JOIN Comment " +
-                    "ON Customer.Email = Comment.UserId;";
+                    "ON Customer.Email = Comment.UserId " +
+                    $"WHERE Customer.Email = '{comment.CustomerId}';";
                 Func<SqlDataReader, CustomerModel> queryFunction = sqlreader =>
                 {
                     object[] prop = new object[customers.Length];
                     for (int i = 0; i < prop.Length; i++)
                     {
-                        prop[i] = sqlreader.GetValue(i);
+                        var value = sqlreader.GetValue(i);
+                        value = value.ToString() != "" ? value : null;
+                        prop[i] = value;
                     }
                     return CreateInstance<CustomerModel>(prop);
                 };
@@ -336,6 +353,86 @@ namespace WebShop.Services.DatabaseServices
             }
         }
 
+        public bool AddLikeToDatabase(Like like)
+        {
+            string[] columns = new string[]{
+                "UserId",
+                "ProductId",
+                "IsLiked"
+            };
 
+            var previouslike = GetLikeModelsFromDatabaseById(like);
+
+            string query = null;
+
+            if (previouslike == null || previouslike.Count == 0)
+            {
+                query = $"INSERT INTO Opinion ({String.Join(",", columns)}) VALUES('{like.Customer.Email}', {like.Product.Id}, NULL)";
+
+                if (like.Value.HasValue)
+                {
+                    int likeValue = like.Value.Value ? 1 : 0;
+                    query = $"INSERT INTO Opinion ({String.Join(",", columns)}) VALUES('{like.Customer.Email}', {like.Product.Id}, {likeValue})";
+                }
+            }
+            else
+            {
+                query = $"UPDATE Opinion SET IsLiked = NULL WHERE ProductId = {like.Product.Id} AND UserId = '{like.Customer.Email}';";
+
+                if (like.Value.HasValue)
+                {
+                    int likeValue = like.Value.Value ? 1 : 0;
+                    query = $"UPDATE Opinion SET IsLiked = {likeValue} WHERE ProductId = {like.Product.Id} AND UserId = '{like.Customer.Email}';";
+                }
+            }
+
+          
+
+            return ExecuteQuery(query);
+        }
+
+        public List<LikeModel> GetLikeModelsFromDatabaseById(Like like)
+        {
+            string[] columns = new string[]{
+                "UserId",
+                "ProductId",
+                "IsLiked"
+            };
+            string query = $"SELECT {String.Join(",", columns)} FROM Opinion WHERE ProductId = {like.Product.Id} AND UserId = '{like.Customer.Email}';";
+            Func<SqlDataReader, LikeModel> queryFunction = sqlreader =>
+            {
+                object[] prop = new object[columns.Length];
+                for (int i = 0; i < prop.Length; i++)
+                {
+                    var value = sqlreader.GetValue(i);
+                    value = value.ToString() != "" ? value : null;
+                    prop[i] = value;
+                }
+                return CreateInstance<LikeModel>(prop);
+            };
+            return QueryDatabase(query, queryFunction);
+        }
+
+        public List<LikeModel> GetLikeModelsFromProduct(string userId)
+        {
+            string[] columns = new string[]{
+                "UserId",
+                "ProductId",
+                "IsLiked"
+            };
+            string query = $"SELECT {String.Join(",", columns)} FROM Opinion WHERE UserId = '{userId}'";
+            Func<SqlDataReader, LikeModel> queryFunction = sqlreader =>
+            {
+                object[] prop = new object[columns.Length];
+                for (int i = 0; i < prop.Length; i++)
+                {
+                    var value = sqlreader.GetValue(i);
+                    value = value.ToString() != "" ? value : null;
+                    prop[i] = value;
+                }
+                return CreateInstance<LikeModel>(prop);
+            };
+            return QueryDatabase(query, queryFunction);
+        }
     }
 }

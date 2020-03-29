@@ -1,0 +1,26 @@
+.single-product-opinion{
+    font-size: 24px;
+}
+
+.single-product-opinion:hover{
+    cursor: pointer;
+}
+
+.single-product-dislike{
+    transform: scaleY(-1) scaleX(-1) translate(0px,0px);
+    padding: 8px;
+}
+
+.single-product-like-container{
+    display: flex;
+    flex-flow: row nowrap;
+    align-content: center;
+}
+
+.like-active{
+    color: #1b6fc2;
+}
+
+.like-deactive{
+    color: lightgray;
+}

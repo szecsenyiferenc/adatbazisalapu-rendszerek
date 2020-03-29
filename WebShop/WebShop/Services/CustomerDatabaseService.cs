@@ -31,7 +31,8 @@ namespace WebShop.Services.DatabaseServices
                 "IsRegularCustomer",
                 "City",
                 "Street",
-                "HouseNumber"
+                "HouseNumber",
+                "IsAdmin"
             };
             string query = $"SELECT {String.Join(",", columns)} FROM Customer";
             string queryString = email != null ? query + $" WHERE Customer.Email = '{email}';" : query;
@@ -40,7 +41,9 @@ namespace WebShop.Services.DatabaseServices
                 object[] prop = new object[columns.Length];
                 for (int i = 0; i < prop.Length; i++)
                 {
-                    prop[i] = sqlreader.GetValue(i);
+                    var value = sqlreader.GetValue(i);
+                    value = value.ToString() != "" ? value : null;
+                    prop[i] = value;
                 }
                 return CreateInstance<CustomerModel>(prop);
             };
@@ -214,7 +217,9 @@ namespace WebShop.Services.DatabaseServices
                     object[] prop = new object[columns.Length];
                     for (int i = 0; i < prop.Length; i++)
                     {
-                        prop[i] = sqlreader.GetValue(i);
+                        var value = sqlreader.GetValue(i);
+                        value = value.ToString() != "" ? value : null;
+                        prop[i] = value;
                     }
                     object[] prop2 = new object[products.Length];
                     for (int i = prop.Length; i < (prop.Length + prop2.Length); i++)

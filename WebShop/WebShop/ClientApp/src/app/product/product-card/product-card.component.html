@@ -2,7 +2,10 @@
   <img [src]="product.image | image" class="card-img-top product-image" alt="..." (click)="openProduct()">
   <div class="card-body">
     <h5 class="card-title product-name" (click)="openProduct()">{{product.name}}</h5>
-    <p class="card-text">Ár: {{product.price}} Ft</p>
+    <div class="card-product-details">
+      <div>Ár: {{product.price}} Ft</div>
+      <app-like [product]="product" [like]="product.like"></app-like>
+    </div>
     <div class="card-buy">
       <button type="button" (click)="addToCart()" class="btn btn-primary product-button">Kosárba</button>
       <div>

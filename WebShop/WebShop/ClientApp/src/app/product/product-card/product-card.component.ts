@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
 import { ProductService } from 'src/app/services/product.service';
 import { Router } from '@angular/router';
+import { LikedProduct } from 'src/app/models/likedProduct.model';
 
 @Component({
   selector: 'app-product-card',
@@ -9,14 +10,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./product-card.component.css']
 })
 export class ProductCardComponent implements OnInit {
-  @Input() product: Product;
+  @Input() product: LikedProduct;
+
   counter: number;
 
   constructor(private router: Router, private productService: ProductService) {
     this.counter = 1;
-
-
-
    }
 
   ngOnInit() {

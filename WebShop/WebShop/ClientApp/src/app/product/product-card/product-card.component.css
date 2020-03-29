@@ -19,7 +19,6 @@
     cursor: pointer;
 }
 
-
 .card-buy{
     display: flex;
     flex-flow: row nowrap;
@@ -35,4 +34,12 @@
 
 .product-number-label{
     margin-bottom: 0px;
+}
+
+.card-product-details{
+    height: 40px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
 }

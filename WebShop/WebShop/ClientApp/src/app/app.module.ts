@@ -23,6 +23,15 @@ import { UploadProductComponent } from './product/upload-product/upload-product.
 import { SingleProductComponent } from './product/single-product/single-product.component';
 import { ImagePipe } from './pipes/image.pipe';
 import { CommentComponent } from './product/comment/comment.component';
+import { registerLocaleData } from '@angular/common';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { LikeComponent } from './product/like/like.component';
+
+import localeFr from '@angular/common/locales/hu';
+import { ProfileComponent } from './profile/profile.component';
+import { AdminGuard } from './guards/admin.guard';
+
+registerLocaleData(localeFr, 'hu');
 
 @NgModule({
    declarations: [
@@ -40,27 +49,34 @@ import { CommentComponent } from './product/comment/comment.component';
       UploadProductComponent,
       SingleProductComponent,
       ImagePipe,
-      CommentComponent
+      CommentComponent,
+      LikeComponent,
+      ProfileComponent
    ],
    imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    AngularFontAwesomeModule,
     RouterModule.forRoot([
-      { path: '', component: ProductComponent, pathMatch: 'full' },
+      { path: '', component: ProductComponent },
       { path: 'login', component: LoginComponent },
       { path: 'registration', component: RegistrationComponent },
-      { path: 'products/:id', component: SingleProductComponent, canActivate: [AuthGuard] },
-      { path: 'products', component: ProductComponent, canActivate: [AuthGuard] },
-      { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
-      { path: 'uploadProduct', component: UploadProductComponent, canActivate: [AuthGuard] },
+      { path: 'products/:id', component: SingleProductComponent },
+      { path: 'products', component: ProductComponent },
+      { path: 'cart', component: CartComponent },
+      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+      { path: 'uploadProduct', component: UploadProductComponent, canActivate: [AuthGuard, AdminGuard] },
+      { path: '**', component: ProductComponent },
     ])
   ],
   providers: [
     HttpService,
     LoginService,
     ProductService,
-    AuthGuard
+    AuthGuard,
+    AdminGuard,
+    [ { provide: LOCALE_ID, useValue: 'hu' } ]
   ],
   bootstrap: [AppComponent]
 })

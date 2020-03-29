@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { Customer } from '../models/customer.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -9,7 +10,7 @@ import { Customer } from '../models/customer.model';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -19,8 +20,12 @@ export class RegistrationComponent implements OnInit {
     newCustomer.balance = 0;
     newCustomer.isRegularCustomer = false;
     newCustomer.houseNumber = +newCustomer.houseNumber;
-    console.log("NC", newCustomer);
-    this.httpService.registerUser(newCustomer);
+    newCustomer.isAdmin = false;
+    this.httpService.registerUser(newCustomer).subscribe(success =>{
+      if(success){
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
 }

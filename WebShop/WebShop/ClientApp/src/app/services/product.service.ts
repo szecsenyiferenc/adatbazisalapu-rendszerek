@@ -7,6 +7,8 @@ import { CartItem } from '../models/cart-item.model';
 import { LoginService } from './login.service';
 import { Cart } from '../models/cart.model';
 import { ProductComment } from '../models/comment.model';
+import { Like } from '../models/like.model';
+import { LikedProduct } from '../models/likedProduct.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,7 @@ import { ProductComment } from '../models/comment.model';
 export class ProductService {
   cart: CartItem[];
   products: Product[];
+  likes: any[];
 
   constructor(private httpService: HttpService, private loginService: LoginService) {
     this.cart = [];
@@ -24,7 +27,7 @@ export class ProductService {
     return this.httpService.getProducts().pipe(tap(products => this.products = products));
   }
 
-  getProductById(id: string): Observable<Product> {
+  getProductById(id: string): Observable<LikedProduct> {
     let selectedProduct = this.products.find(p => p.id === +id);
     return of(selectedProduct);
   }
@@ -67,5 +70,31 @@ export class ProductService {
       return this.httpService.getAllComment(product);
     }
     return of(null);
+  }
+
+  setLike(like: Like){
+    return this.httpService.setLike(like);
+  }
+
+  getLikes(){
+    if(this.loginService.customer$.value){
+      return this.httpService.getLikes(this.loginService.customer$.value);
+    }
+    return of(null);
+  }
+
+  getLikesFromProduct(product: Product){
+    if(this.loginService.customer$.value){
+      return this.httpService.getLikes(this.loginService.customer$.value)
+      .pipe(map(likes => {
+        const like = likes.find(element => element.id === product.id);
+        return like && like.value;
+      }));
+    }
+    return of(null);
+  }
+
+  getCartByUser(){
+    return this.httpService.getCartByUser(this.loginService.customer$.value);
   }
 }

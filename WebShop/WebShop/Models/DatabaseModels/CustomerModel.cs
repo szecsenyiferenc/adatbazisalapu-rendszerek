@@ -7,7 +7,7 @@ namespace WebShop.Models.DatabaseModels
 {
     public class CustomerModel
     {
-        public CustomerModel(string email, string password, string firstName, string lastName, decimal balance, string phone, bool isRegularCustomer, string city, string street, int houseNumber)
+        public CustomerModel(string email, string password, string firstName, string lastName, decimal balance, string phone, bool isRegularCustomer, string city, string street, int houseNumber, bool? isAdmin)
         {
             Email = email;
             Pass = password;
@@ -19,6 +19,7 @@ namespace WebShop.Models.DatabaseModels
             City = city;
             Street = street;
             HouseNumber = houseNumber;
+            IsAdmin = isAdmin;
         }
 
         public string Email { get; set; }
@@ -31,6 +32,7 @@ namespace WebShop.Models.DatabaseModels
         public string City { get; set; }
         public string Street { get; set; }
         public int HouseNumber { get; set; }
+        public bool? IsAdmin { get; set; }
         public List<VisitModel> VisitedProducts { get; set; }
         public List<PurchaseModel> PurhasedProducts { get; set; }
         public List<CommentModel> Comments { get; set; }

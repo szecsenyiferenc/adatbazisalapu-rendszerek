@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product.model';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { switchMap, tap, catchError, map } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
 import { ProductComment } from 'src/app/models/comment.model';
 import { LoginService } from 'src/app/services/login.service';
+import { LikedProduct } from 'src/app/models/likedProduct.model';
 
 @Component({
   selector: 'app-single-product',
@@ -13,13 +14,14 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./single-product.component.css']
 })
 export class SingleProductComponent implements OnInit {
-  product$: Observable<Product>;
+  product$: Observable<LikedProduct>;
   product: Product;
   counter: number;
-  comments$: Observable<ProductComment[]>;
-  comments: ProductComment[];
+  comments$: BehaviorSubject<ProductComment[]> = new BehaviorSubject<ProductComment[]>(null);
+  getComments$: Observable<ProductComment[]>;
   customerComment: ProductComment;
   commentField: string;
+  like?:boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,21 +42,26 @@ export class SingleProductComponent implements OnInit {
       customer: this.loginService.customer$.value
     }
 
+    this.getComments$ = this.product$.pipe(
+      switchMap(product => this.productService.getAllComment(product)),
+      map(product => {
+        if(product){
+          return product.sort((a, b) => (a.dateTime < b.dateTime) ? 1 : -1);
+        }
+        return [];
+      }),
+    );
+
     this.counter = 1;
+    this.like = null;
   }
 
   ngOnInit() {    
-    this.product$.pipe(
-      switchMap(product => this.productService.getAllComment(product)),
-      map(product => product.sort((a, b) => (a.dateTime < b.dateTime) ? 1 : -1))
-    ).subscribe(comments => this.comments = comments);
+    this.getComments$.subscribe(comments => this.comments$.next(comments));
   }
 
   reload(){
-    this.product$.pipe(
-      switchMap(product => this.productService.getAllComment(product)),
-      map(product => product.sort((a, b) => (a.dateTime < b.dateTime) ? 1 : -1))
-    ).subscribe(comments => this.comments = comments);
+    this.getComments$.subscribe(comments => this.comments$.next(comments));
   }
 
   addToCart(){

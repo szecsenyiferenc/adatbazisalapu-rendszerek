@@ -1,13 +1,13 @@
 <body class="text-center">
   <form class="form-signin" #f="ngForm" (ngSubmit)="submit(f)">
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <h1 class="h3 mb-3 font-weight-normal">Kérjük jelentkezz be!</h1>
     <div>
-      <label for="inputEmail" class="sr-only">Email address</label>
+      <label for="inputEmail" class="sr-only">Email</label>
       <input type="email" 
       id="inputEmail" 
       name="email"
       class="form-control" 
-      placeholder="Email address" 
+      placeholder="Email" 
       required 
       autofocus
       ngModel
@@ -15,19 +15,19 @@
       >
     </div>
     <div>
-      <label for="inputPassword" class="sr-only">Password</label>
+      <label for="inputPassword" class="sr-only">Jelszó</label>
       <input 
       type="password" 
       id="inputPassword" 
       name="password"
       class="form-control" 
-      placeholder="Password" 
+      placeholder="Jelszó" 
       required
       ngModel
       #password="ngModel"
       >
     </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Bejelentkezés</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017-2019 WebShop</p>
   </form>
 </body>

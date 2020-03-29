@@ -4,7 +4,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { LoginService } from 'src/app/services/login.service';
 import { Product } from 'src/app/models/product.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-comment',
@@ -32,12 +32,12 @@ export class CommentComponent implements OnInit {
     }
 
     this.productService.uploadComment(comment)
-    .pipe(tap(() => this.reloadComments()))
-    .subscribe(a => console.log(a));
+    .pipe(map(() => this.reloadComments()))
+    .subscribe();
   }
 
   
-  reloadComments() { // You can give any function name
+  reloadComments() { 
     this.reload.emit();
 }
 

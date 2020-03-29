@@ -23,6 +23,19 @@ html {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
+.customer-welcome{
+  padding-top: 4px;
+  outline: none;
+}
+
+.customer-welcome:active{
+  outline: none;
+}
+
+.customer-welcome:hover{
+  cursor: pointer;
+}
+
 .login-button{
   margin-left: 4px;
 }

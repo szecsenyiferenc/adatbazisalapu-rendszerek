@@ -38,17 +38,35 @@ namespace WebShop.Providers
             return db.Products.AddCommentsToDatabase(comment);
         }
 
+        public bool AddLikeToDatabase(Like like)
+        {
+            return db.Products.AddLikeToDatabase(like);
+        }
+
         public List<Comment> GetCommentsFromDatabase(int productId)
         {
             var commentModels = db.Products.GetCommentsFromProductWithProperties(productId);
-            var comment = new List<Comment>();
+            var comments = new List<Comment>();
 
             foreach (var commentModel in commentModels)
             {
-                comment.Add(factory.CreateComment(commentModel));
+                comments.Add(factory.CreateComment(commentModel));
             }
 
-            return comment;
+            return comments;
+        }
+
+        public List<Like> GetLikesFromDatabase(string userId)
+        {
+            var likeModels = db.Products.GetLikeModelsFromProduct(userId);
+            var likes = new List<Like>();
+
+            foreach (var likeModel in likeModels)
+            {
+                likes.Add(factory.CreateComment(likeModel));
+            }
+
+            return likes;
         }
     }
 }

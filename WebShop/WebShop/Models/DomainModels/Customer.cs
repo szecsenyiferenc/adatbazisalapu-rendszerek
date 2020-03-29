@@ -13,7 +13,7 @@ namespace WebShop.Models.DomainModels
         }
 
         public Customer(string email, string firstName, string lastName, decimal balance, 
-            string phone, bool isRegularCustomer, string city, string street, int houseNumber, 
+            string phone, bool isRegularCustomer, string city, string street, int houseNumber, bool? isAdmin,
             List<VisitedProduct> visitedProducts = null, 
             List<PurchasedProduct> purhasedProducts = null, 
             List<Comment> comments = null, 
@@ -28,6 +28,7 @@ namespace WebShop.Models.DomainModels
             City = city;
             Street = street;
             HouseNumber = houseNumber;
+            IsAdmin = isAdmin;
             VisitedProducts = visitedProducts != null ? visitedProducts : new List<VisitedProduct>();
             PurhasedProducts = purhasedProducts != null ? purhasedProducts : new List<PurchasedProduct>();
             Comments = comments != null ? comments : new List<Comment>();
@@ -43,6 +44,7 @@ namespace WebShop.Models.DomainModels
         public string City { get; set; }
         public string Street { get; set; }
         public int HouseNumber { get; set; }
+        public bool? IsAdmin { get; set; }
         public List<VisitedProduct> VisitedProducts { get; set; }
         public List<PurchasedProduct> PurhasedProducts { get; set; }
         public List<Comment> Comments { get; set; }

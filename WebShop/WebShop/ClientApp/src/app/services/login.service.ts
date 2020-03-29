@@ -3,6 +3,7 @@ import { Customer } from '../models/customer.model';
 import { HttpService } from './http.service';
 import { LoginData } from '../models/login-data.model';
 import { Observable, Subscription, BehaviorSubject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ constructor(private httpService: HttpService) {
 
 
 login(loginData: LoginData){
-  this.httpService.checkLogin(loginData)
-  .subscribe(customer => this.customer$.next(customer));
+  return this.httpService.checkLogin(loginData)
+  .pipe(tap(customer => this.customer$.next(customer)));
 }
 
 logout(){

@@ -8,6 +8,11 @@ namespace WebShop.Models.DomainModels
 {
     public class Cart
     {
+        public Cart(Customer customer, List<CartItem> cartItems)
+        {
+            Customer = customer;
+            CartItems = cartItems;
+        }
 
         [JsonProperty("customer")]
         public Customer Customer { get; set; }

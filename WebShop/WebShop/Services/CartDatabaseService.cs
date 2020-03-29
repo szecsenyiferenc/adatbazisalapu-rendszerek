@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using WebShop.Models.DatabaseModels;
 using WebShop.Models.DomainModels;
 using WebShop.Services.DatabaseServices;
 
@@ -35,6 +37,29 @@ namespace WebShop.Services
             }
         }
 
+        public List<CartModel> GetCartsFromDatabase(string id)
+        {
+            string[] columns = new string[]{
+                "CartId",
+                "UserId",
+                "PurchaseDate",
+                "StatusId"
+            };
+            string query = $"SELECT {String.Join(",", columns)} FROM Cart WHERE UserId = '{id}'";
+            Func<SqlDataReader, CartModel> queryFunction = sqlreader =>
+            {
+                object[] prop = new object[columns.Length];
+                for (int i = 0; i < prop.Length; i++)
+                {
+                    var value = sqlreader.GetValue(i);
+                    value = value.ToString() != "" ? value : null;
+                    prop[i] = value;
+                }
+                return CreateInstance<CartModel>(prop);
+            };
+            return QueryDatabase(query, queryFunction);
+        }
+
         private bool AddCartItemToDatabase(Cart cart, int cartId)
         {
             try
@@ -59,5 +84,62 @@ namespace WebShop.Services
                 return false;
             }
         }
+
+        public List<CartModel> GetCartsFromDatabaseWithProperties(string id)
+        {
+            var cartModels = GetCartsFromDatabase(id);
+            AddCartItemsToCart(cartModels);
+            return cartModels;
+        }
+
+        public void AddCartItemsToCart(List<CartModel> cartModels)
+        {
+
+                string[] columns = new string[]{
+                    "CartId",
+                    "ProductId",
+                    "Quantity"
+                };
+                string[] products = new string[]
+                {
+                    "Id",
+                    "Name",
+                    "Price",
+                    "Image"
+                };
+                foreach (var cartModel in cartModels)
+                {
+                    string query = $"SELECT {String.Join(",", columns)},{String.Join(",", products)} FROM PurchasedProducts " +
+                        "JOIN Product " +
+                        "ON Product.Id = PurchasedProducts.ProductId " +
+                        $"WHERE CartId = '{cartModel.Id}';";
+                    Func<SqlDataReader, CartItemModel> queryFunction = sqlreader =>
+                    {
+                        object[] prop = new object[columns.Length];
+                        for (int i = 0; i < prop.Length; i++)
+                        {
+                            prop[i] = sqlreader.GetValue(i);
+                        }
+                        object[] prop2 = new object[products.Length];
+                        for (int i = prop.Length; i < (prop.Length + prop2.Length); i++)
+                        {
+                            prop2[i - prop.Length] = sqlreader.GetValue(i);
+                        }
+                        var cartItemModel = CreateInstance<CartItemModel>(prop);
+                        cartItemModel.Product = CreateInstance<ProductModel>(prop2);
+                        return cartItemModel;
+                    };
+                    cartModel.CartItems = QueryDatabase(query, queryFunction);
+                }
+            
+
+
+
+
+
+           
+        }
+
+
     }
 }

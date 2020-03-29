@@ -1,9 +1,13 @@
 <div class="single-product-root">
   <div class="single-product-container" *ngIf="(product$ | async) as product">
     <img [src]="product.image | image" class="single-product-image" alt="...">
-    <div>
+    <div class="single-product-details-container">
+      <div class="single-product-title">
       <h5>{{product.name}}</h5>
-      <p>Ár: {{product.price}} Ft</p>
+      <div class="single-product-details">
+        <div>Ár: {{product.price}} Ft</div>
+        <app-like [product]="product" [like]="product.like"></app-like>
+      </div>
     </div>
     <div class="card-buy">
       <button type="button" (click)="addToCart()" class="btn btn-primary product-button">Kosárba</button>
@@ -15,7 +19,7 @@
   </div>
   <div class="comment-container">
     <app-comment *ngIf="customerComment.customer" (reload)="reload()" [product]="product" [comment]="customerComment" [isNewComment]="true"></app-comment>
-    <ng-container *ngIf="comments">
+    <ng-container *ngIf="(comments$ | async) as comments">
       <app-comment [comment]="comment" [isNewComment]="false" *ngFor="let comment of comments"></app-comment>
     </ng-container>
   </div>

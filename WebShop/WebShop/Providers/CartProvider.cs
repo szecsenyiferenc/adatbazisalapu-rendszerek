@@ -22,5 +22,18 @@ namespace WebShop.Providers
         {
             return db.Cart.AddCartToDatabase(cart);
         }
+
+        public List<Cart> GetCartsFromDatabase(string id)
+        {
+            var cartModels = db.Cart.GetCartsFromDatabaseWithProperties(id);
+            var carts = new List<Cart>();
+
+            foreach (var cartModel in cartModels)
+            {
+                carts.Add(cf.CreateCart(cartModel));
+            }
+
+            return carts;
+        }
     }
 }

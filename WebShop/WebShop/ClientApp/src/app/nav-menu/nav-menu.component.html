@@ -3,9 +3,9 @@
     class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
   >
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">WebShop</a>
-      <div *ngIf="(loginService.customer$ | async) as loggedInCustomer">
-        <p>Hello {{ loggedInCustomer.email }}</p>
+      <a class="navbar-brand" [routerLink]="['/products']">WebShop</a>
+      <div class="customer-welcome noselect" *ngIf="(loginService.customer$ | async) as loggedInCustomer" [routerLink]="['/profile']">
+        Hello {{ loggedInCustomer.lastName }} {{ loggedInCustomer.firstName }}!
       </div>
       <button
         class="navbar-toggler"
@@ -23,16 +23,7 @@
         [ngClass]="{ show: isExpanded }"
       >
         <ul class="navbar-nav flex-grow">
-          <li 
-          class="nav-item" 
-          [routerLinkActive]="['link-active']"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >
-            <a class="nav-link text-dark" [routerLink]="['/products']"
-              >Termékek</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
+          <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="(loginService.customer$ | async)?.isAdmin">
             <a class="nav-link text-dark" [routerLink]="['/uploadProduct']"
               >Termék feltöltése</a
             >

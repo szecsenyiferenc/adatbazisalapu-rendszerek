@@ -102,9 +102,6 @@ namespace WebShop.Services.DatabaseServices
                                 id = (int)reader.GetDecimal(0);
                             }
                         }
-
-                        //object result = command.ExecuteScalar();
-                        //id = Convert.ToInt32(result);
                     }
                     return id;
                 }

@@ -1,7 +1,7 @@
 <div class="container">
   <div class="py-5 text-center disable-padding">
-    <h2>Registration form</h2>
-    <p class="lead">Hi new user</p>
+    <h2>Regisztráció</h2>
+    <p class="lead">Üdvözlünk új felhasználó!</p>
   </div>
 
   <div class="row">
@@ -10,26 +10,11 @@
       <form class="needs-validation" #f="ngForm" (ngSubmit)="submit(f)">
         <div class="row">
           <div class="col-md-6 mb-3">
-            <label for="firstName">First name</label>
-            <input 
-            type="text" 
-            class="form-control" 
-            id="firstName" 
-            placeholder="First name"
-            ngModel
-            #firstName="ngModel"
-            name="firstName"
-            required>
-            <div class="invalid-feedback">
-              Valid first name is required.
-            </div>
-          </div>
-          <div class="col-md-6 mb-3">
-            <label for="lastName">Last name</label>
+            <label for="lastName">Vezetéknév</label>
             <input type="text" 
             class="form-control" 
             id="lastName" 
-            placeholder="Last name" 
+            placeholder="Vezetéknév" 
             ngModel
             #lastName="ngModel"
             name="lastName"
@@ -38,8 +23,22 @@
               Valid last name is required.
             </div>
           </div>
+        <div class="col-md-6 mb-3">
+          <label for="firstName">Keresztnév</label>
+          <input 
+          type="text" 
+          class="form-control" 
+          id="firstName" 
+          placeholder="Keresztnév"
+          ngModel
+          #firstName="ngModel"
+          name="firstName"
+          required>
+          <div class="invalid-feedback">
+            Valid first name is required.
+          </div>
         </div>
-
+      </div>
         <div class="mb-3">
           <label for="email">Email</label>
           <input type="email" 
@@ -56,11 +55,11 @@
         </div>
 
         <div class="mb-3">
-          <label for="email">Password</label>
+          <label for="email">Jelszó</label>
           <input type="password" 
           class="form-control" 
           id="password" 
-          placeholder="Password"
+          placeholder="Jelszó"
           ngModel
           #password="ngModel"
           name="password"
@@ -71,7 +70,7 @@
         </div>
 
         <div class="mb-3">
-          <label for="address">Phone</label>
+          <label for="address">Telefon</label>
           <input type="text" 
           class="form-control" 
           id="phone" 
@@ -86,11 +85,11 @@
         </div>
 
         <div class="mb-3">
-          <label for="address">City</label>
+          <label for="address">Város</label>
           <input type="text" 
           class="form-control" 
           id="city" 
-          placeholder="City" 
+          placeholder="Város" 
           ngModel
           #city="ngModel"
           name="city"
@@ -101,11 +100,11 @@
         </div>
 
         <div class="mb-3">
-          <label for="address">Street</label>
+          <label for="address">Utca</label>
           <input type="text" 
           class="form-control" 
           id="street" 
-          placeholder="Street" 
+          placeholder="Utca" 
           ngModel
           #street="ngModel"
           name="street"
@@ -116,11 +115,11 @@
         </div>
 
         <div class="mb-3">
-          <label for="address">House number</label>
+          <label for="address">Házszám</label>
           <input type="text" 
           class="form-control" 
           id="houseNumber" 
-          placeholder="House number" 
+          placeholder="Házszám" 
           ngModel
           #houseNumber="ngModel"
           name="houseNumber"
@@ -129,11 +128,11 @@
             Please enter your shipping address.
           </div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Regisztráció</button>
       </form>
     </div>
   </div>
 
   <footer class="my-5 pt-5 text-muted text-center text-small">
-    <p class="mb-1">&copy; 2017-2019 Company Name</p>
+    <p class="mb-1">&copy; 2017-2019 WebShop</p>
   </footer>

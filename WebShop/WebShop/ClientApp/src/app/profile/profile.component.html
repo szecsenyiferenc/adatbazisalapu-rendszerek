@@ -1,0 +1,99 @@
+<div class="customer-root" *ngIf="(customer$ | async) as customer">
+  <div class="customer-container">
+    <h2 class="customer-detail-title">Adatok</h2>
+    <ul class="list-group customer-details">
+      <li class="list-group-item customer-detail-item">
+        <div>
+          Vezetéknév
+        </div>
+        <div>
+          {{customer.lastName}}
+        </div>
+      </li>
+      <li class="list-group-item customer-detail-item">
+        <div>
+          Keresztnév
+        </div>
+        <div>
+          {{customer.firstName}}
+        </div>
+      </li>
+      <li class="list-group-item customer-detail-item">
+        <div>
+          Email
+        </div>
+        <div>
+          {{customer.email}}
+        </div>
+      </li>
+      <li class="list-group-item customer-detail-item">
+        <div>
+          Telefon
+        </div>
+        <div>
+          {{customer.phone}}
+        </div>
+      </li>
+      <li class="list-group-item customer-detail-item">
+        <div>
+          Város
+        </div>
+        <div>
+          {{customer.city}}
+        </div>
+      </li>
+      <li class="list-group-item customer-detail-item">
+        <div>
+          Utca
+        </div>
+        <div>
+          {{customer.street}}
+        </div>
+      </li>
+      <li class="list-group-item customer-detail-item">
+        <div>
+          Házszám
+        </div>
+        <div>
+          {{customer.houseNumber}}
+        </div>
+      </li>
+      <li class="list-group-item customer-detail-item">
+        <div>
+          Törzsvásárló
+        </div>
+        <div>
+          {{customer.isRegularCustomer ? "Igen" : "Nem"}}
+        </div>
+      </li>
+      <li class="list-group-item customer-detail-item">
+        <div>
+          Admin
+        </div>
+        <div>
+          {{customer.isAdmin ? "Igen" : "Nem"}}
+        </div>
+      </li>
+    </ul>
+    <h2 class="customer-detail-title">Rendelések</h2>
+    <div *ngFor="let cart of (carts$ | async)">
+      <ul class="list-group cart-items-container" *ngIf="cart.cartItems.length !== 0">
+        <li class="list-group-item cart-item" *ngFor="let cartItem of cart.cartItems">
+          <div class="cart-item-type">
+            <img class="cart-item-image" [src]="cartItem.product.image | image">
+            <div class="cart-item-details">
+              <div class="cart-item-name">
+                {{cartItem.product.name}}
+              </div>
+              <div class="cart-item-count">
+                Darabszám: {{cartItem.quantity}}
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>

@@ -13,6 +13,12 @@ namespace WebShop.Models.DomainModels
 
         }
 
+        public CartItem(Product product, int quantity)
+        {
+            Product = product;
+            Quantity = quantity;
+        }
+
         [JsonProperty("product")]
         public Product Product { get; set; }
         [JsonProperty("quantity")]
