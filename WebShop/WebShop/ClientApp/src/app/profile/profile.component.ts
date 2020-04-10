@@ -13,14 +13,20 @@ import { ProductService } from '../services/product.service';
 export class ProfileComponent implements OnInit {
   customer$: Observable<Customer>;
   carts$: BehaviorSubject<Cart[]>;
+  plusBalance: number;
 
   constructor(private loginService: LoginService, private productService: ProductService) { 
     this.customer$ = this.loginService.customer$;
     this.carts$ = new BehaviorSubject<Cart[]>([]);
+    this.plusBalance = 0;
   }
 
   ngOnInit() {
     this.productService.getCartByUser().subscribe(carts => this.carts$.next(carts));
+  }
+
+  uploadBalance(){
+    this.productService.uploadBalance(this.plusBalance).subscribe();
   }
 
 }

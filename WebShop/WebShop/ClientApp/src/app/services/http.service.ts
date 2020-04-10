@@ -68,4 +68,9 @@ export class HttpService {
   getCartByUser(customer: Customer): Observable<any>{
     return this.http.get(this.baseUrl + `api/cart/${customer.email}`);
   }
+
+  uploadBalance(customer: Customer): Observable<any>{
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(this.baseUrl + 'api/customer', JSON.stringify(customer), { headers });
+  }
 }

@@ -74,7 +74,28 @@
           {{customer.isAdmin ? "Igen" : "Nem"}}
         </div>
       </li>
+      <li class="list-group-item customer-detail-item">
+        <div>
+          Egyenleg
+        </div>
+        <div>
+          {{customer.balance}}
+        </div>
+      </li>
     </ul>
+
+    <h2 class="customer-detail-title">Egyenleg feltöltése</h2>
+    <div class="new-balance">
+      <ul class="list-group">
+        <li class="list-group-item">         
+          <div class="row upload-balance">
+            <input [(ngModel)]="plusBalance" type="number" min="0" step="1" id="newBalance">
+            <button type="button" (click)="uploadBalance()" class="btn btn-primary upload-balance-btn" >Feltöltés</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+    
     <h2 class="customer-detail-title">Rendelések</h2>
     <div *ngFor="let cart of (carts$ | async)">
       <ul class="list-group cart-items-container" *ngIf="cart.cartItems.length !== 0">

@@ -13,13 +13,27 @@ import { Observable } from 'rxjs';
 export class CartComponent implements OnInit {
   cart: CartItem[];
   customer$: Observable<Customer>;
+  fullAmount: number;
 
   constructor(private productService: ProductService, private loginService: LoginService) { 
     this.cart = this.productService.cart;
     this.customer$ = this.loginService.customer$;
+    this.fullAmount = 0;
   }
 
   ngOnInit() {
+  }
+
+  get totalPrice(){
+    let price = 0;
+      this.cart.forEach(element => {
+        price += element.quantity*element.product.price;
+      });
+    return price;
+  }
+
+  multiplyQuantity(quantity: number, price: number){
+    return quantity*price;
   }
 
   deleteItemFromCart(cartItem: CartItem){

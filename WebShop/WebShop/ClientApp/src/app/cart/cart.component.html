@@ -11,6 +11,9 @@
           <div class="cart-item-count">
             Darabszám: {{cartItem.quantity}}
           </div>
+          <div>
+            Összeg: {{multiplyQuantity(cartItem.quantity, cartItem.product.price)}} 
+          </div>
         </div>
       </div>
       <button type="button" class="btn btn-primary" (click)="deleteItemFromCart(cartItem)">Törlés</button>
@@ -22,5 +25,8 @@
   <h2 *ngIf="cart.length !== 0 && !(customer$ | async)">
     A rendeléshez jelentkezzen be
   </h2>
+  <div *ngIf="cart.length !== 0 && (customer$ | async)">
+    <p>Teljes összeg: {{totalPrice}}</p>
+  </div>
   <button *ngIf="cart.length !== 0 && (customer$ | async)" type="button" class="btn btn-primary order-button" (click)="orderProducts()">Rendelés</button>
 </div>

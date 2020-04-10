@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebShop.Models;
 using WebShop.Models.DatabaseModels;
+using WebShop.Models.DomainModels;
 
 namespace WebShop.Services.DatabaseServices
 {
@@ -258,6 +259,13 @@ namespace WebShop.Services.DatabaseServices
         public int ConvertBoolToInt(bool value)
         {
             return value ? 1 : 0;
+        }
+
+        public bool UploadBalanceInDatabase(Customer customer)
+        {
+            string query = $"UPDATE Customer SET Balance = {customer.Balance} WHERE Email = '{customer.Email}'";
+
+            return ExecuteQuery(query);
         }
     }
 }

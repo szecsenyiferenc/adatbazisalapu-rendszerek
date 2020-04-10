@@ -67,3 +67,17 @@
     font-size: 20px;
     border-radius: 8px;
 }
+
+.upload-balance {
+    justify-content: center;
+    display: grid;
+}
+
+.upload-balance-btn {
+    margin-top: 10px;
+}
+
+.new-balance {
+    justify-content: center;
+    text-align: center;
+}

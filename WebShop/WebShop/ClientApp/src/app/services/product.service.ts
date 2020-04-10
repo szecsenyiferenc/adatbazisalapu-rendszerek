@@ -9,6 +9,8 @@ import { Cart } from '../models/cart.model';
 import { ProductComment } from '../models/comment.model';
 import { Like } from '../models/like.model';
 import { LikedProduct } from '../models/likedProduct.model';
+import { Customer } from '../models/customer.model';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -96,5 +98,11 @@ export class ProductService {
 
   getCartByUser(){
     return this.httpService.getCartByUser(this.loginService.customer$.value);
+  }
+
+  uploadBalance(plusBalance: number){
+    let customer: Customer = this.loginService.customer$.value;
+    customer.balance += plusBalance;
+    return this.httpService.uploadBalance(customer);
   }
 }
