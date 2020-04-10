@@ -23,6 +23,19 @@
         [ngClass]="{ show: isExpanded }"
       >
         <ul class="navbar-nav flex-grow">
+
+          <li class="nav-item dropdown" >
+            <a class="nav-link text-dark cart dropbtn"
+              >Kategóriák</a
+            >
+            <ul class="list-group dropdown-content">
+              <li class="list-group-item">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </li>
+            </ul>
+          </li>
           <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="(loginService.customer$ | async)?.isAdmin">
             <a class="nav-link text-dark" [routerLink]="['/uploadProduct']"
               >Termék feltöltése</a

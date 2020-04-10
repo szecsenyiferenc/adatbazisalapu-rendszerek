@@ -3,7 +3,8 @@ import { ProductService } from '../services/product.service';
 import { CartItem } from '../models/cart-item.model';
 import { Customer } from '../models/customer.model';
 import { LoginService } from '../services/login.service';
-import { Observable } from 'rxjs';
+import { Observable, empty } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -15,7 +16,7 @@ export class CartComponent implements OnInit {
   customer$: Observable<Customer>;
   fullAmount: number;
 
-  constructor(private productService: ProductService, private loginService: LoginService) { 
+  constructor(private productService: ProductService, private loginService: LoginService, private router: Router) { 
     this.cart = this.productService.cart;
     this.customer$ = this.loginService.customer$;
     this.fullAmount = 0;
@@ -42,7 +43,21 @@ export class CartComponent implements OnInit {
 
   orderProducts(){
     console.log(this.cart);
-    this.productService.uploadCart(this.cart).subscribe(a => console.log(a));
+    let customer: Customer = this.loginService.customer$.value;
+    if(customer.balance >= this.totalPrice){
+        this.productService.uploadCart(this.cart).subscribe(a => console.log(a));
+        this.productService.uploadBalance(-(this.totalPrice)).subscribe();
+        alert('Sikeres rendelés!');  
+
+        for(let i = this.cart.length - 1; i >= 0; i--){
+          this.cart.splice(i, 1);
+        }
+        
+        this.router.navigate(['/profile']);
+    }else{
+      alert('Nincs elegendő egyenleged.');
+    }
+
   }
 
 }
