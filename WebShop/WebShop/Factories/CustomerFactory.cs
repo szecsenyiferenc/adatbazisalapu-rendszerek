@@ -74,5 +74,10 @@ namespace WebShop.Factories
             return new CartItem(CreateProduct(cartItemModel.Product), cartItemModel.Quantity);
         }
 
+        public Category CreateCategory(CategoryModel categoryModel)
+        {
+            return new Category(categoryModel.Id, categoryModel.Name);
+        }
+
     }
 }

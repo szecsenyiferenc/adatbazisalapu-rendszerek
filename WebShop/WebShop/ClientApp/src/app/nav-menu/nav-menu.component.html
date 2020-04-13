@@ -29,10 +29,8 @@
               >Kategóriák</a
             >
             <ul class="list-group dropdown-content">
-              <li class="list-group-item">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+              <li class="list-group-item categories" *ngFor="let category of (categories$ | async)">
+                <a class="dropdown-item" href="#">{{ category.name }}</a>
               </li>
             </ul>
           </li>

@@ -27,5 +27,24 @@ namespace WebShop.Services.DatabaseServices
             };
             return QueryDatabase(query, queryFunction);
         }
+
+        public List<ProductCategoryModel> GetPruductCategories()
+        {
+            string[] columns = new string[]{
+                "ProductId",
+                "CategoryId"
+            };
+            string query = $"SELECT {String.Join(",", columns)} FROM ProductCategory";
+            Func<SqlDataReader, ProductCategoryModel> queryFunction = sqlreader =>
+            {
+                object[] prop = new object[columns.Length];
+                for (int i = 0; i < prop.Length; i++)
+                {
+                    prop[i] = sqlreader.GetValue(i);
+                }
+                return CreateInstance<ProductCategoryModel>(prop);
+            };
+            return QueryDatabase(query, queryFunction);
+        }
     }
 }

@@ -11,6 +11,7 @@ import { Like } from '../models/like.model';
 import { LikedProduct } from '../models/likedProduct.model';
 import { Customer } from '../models/customer.model';
 import { HttpHeaders } from '@angular/common/http';
+import { Category } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ import { HttpHeaders } from '@angular/common/http';
 export class ProductService {
   cart: CartItem[];
   products: Product[];
+  categories: Category[];
   likes: any[];
 
   constructor(private httpService: HttpService, private loginService: LoginService) {
@@ -104,5 +106,9 @@ export class ProductService {
     let customer: Customer = this.loginService.customer$.value;
     customer.balance += plusBalance;
     return this.httpService.uploadBalance(customer);
+  }
+
+  getCategories(): Observable<Category[]> {
+    return this.httpService.getCategories().pipe(tap(categories => this.categories = categories));
   }
 }

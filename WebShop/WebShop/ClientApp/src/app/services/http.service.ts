@@ -73,4 +73,8 @@ export class HttpService {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(this.baseUrl + 'api/customer', JSON.stringify(customer), { headers });
   }
+
+  getCategories(): Observable<any> {
+    return this.http.get(this.baseUrl + 'api/category');
+  }
 }
