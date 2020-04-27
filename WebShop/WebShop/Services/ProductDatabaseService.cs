@@ -41,8 +41,42 @@ namespace WebShop.Services.DatabaseServices
             //AddPurhasedProductsToProducts(products);
             AddCommentsToProducts(products);
             AddLikesToProducts(products);
+            AddCategoriesToProducts(products);
             return products;
         }
+        public void AddCategoriesToProducts(List<ProductModel> products)
+        {
+            string[] categories = new string[]
+            {
+                "Category.Id",
+                "Category.Name"
+            };
+
+            //SELECT Category.Id, Category.Name FROM Category, Product, ProductCategory WHERE Product.Id = ProductCategory.ProductId AND Category.Id = ProductCategory.CategoryId AND Product.Id = 2;
+
+            foreach (var product in products)
+            {
+                string query = $"SELECT {String.Join(",", categories)} FROM Category, Product, ProductCategory " +
+                    "WHERE Product.Id = ProductCategory.ProductId " + 
+                    "AND Category.Id = ProductCategory.CategoryId " +
+                    $"AND Product.Id = '{product.Id}';";
+
+                Func<SqlDataReader, CategoryModel> queryFunction = sqlreader =>
+                {
+                    object[] prop = new object[categories.Length];
+                    for (int i = 0; i < prop.Length; i++)
+                    {
+                        prop[i] = sqlreader.GetValue(i);
+                    }
+                   
+                    var prodCat = CreateInstance<CategoryModel>(prop);
+                    //prodCat.Category = CreateInstance<CategoryModel>(prop2);
+                    return prodCat;
+                };
+                product.Categories = QueryDatabase(query, queryFunction);
+            }
+        }
+
         public void AddVisitedProductsToProducts(List<ProductModel> products)
         {
             string[] columns = new string[]{

@@ -44,7 +44,7 @@ namespace WebShop.Factories
 
         public PurchasedProduct CreateProduct(ProductModel productModel, string category)
         {
-            return new PurchasedProduct(productModel.Id, productModel.Name, productModel.Price, productModel.Image, category);
+            return new PurchasedProduct(productModel.Id, productModel.Name, productModel.Price, productModel.Image,category);
         }
 
         public Comment CreateComment(CommentModel commentModel)
@@ -79,5 +79,16 @@ namespace WebShop.Factories
             return new Category(categoryModel.Id, categoryModel.Name);
         }
 
+        public Product CreateProductWithCategory(ProductModel productModel)
+        {
+            List<Category> categoriesList = new List<Category>();
+            foreach (CategoryModel item in productModel.Categories)
+            {
+                categoriesList.Add(CreateCategory(item));
+            }
+            var product = CreateProduct(productModel);
+            product.Categories = categoriesList;
+            return product;
+        }
     }
 }

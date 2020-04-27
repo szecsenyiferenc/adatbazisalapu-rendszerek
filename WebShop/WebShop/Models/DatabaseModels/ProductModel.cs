@@ -23,5 +23,6 @@ namespace WebShop.Models.DatabaseModels
         public List<PurchaseModel> PurhasedProducts { get; set; }
         public List<CommentModel> Comments { get; set; }
         public List<LikeModel> Likes { get; set; }
+        public List<CategoryModel> Categories { get; set; }
     }
 }

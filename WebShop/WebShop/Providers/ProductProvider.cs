@@ -17,11 +17,12 @@ namespace WebShop.Providers
         public List<Product> GetProducts()
         {
             var productModels = db.Products.GetProductsWithProperties();
+            db.Products.AddCategoriesToProducts(productModels);
             var products = new List<Product>();
 
             foreach (var productModel in productModels)
             {
-                products.Add(factory.CreateProduct(productModel));
+                products.Add(factory.CreateProductWithCategory(productModel));
             }
 
             return products;

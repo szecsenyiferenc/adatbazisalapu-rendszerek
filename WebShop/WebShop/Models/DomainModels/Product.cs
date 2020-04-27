@@ -12,7 +12,6 @@ namespace WebShop.Models.DomainModels
         {
 
         }
-
         public Product(int id, string name, double price, byte[] image)
         {
             Id = id;
@@ -29,5 +28,7 @@ namespace WebShop.Models.DomainModels
         public double Price { get; set; }
         [JsonProperty("image")]
         public byte[] Image { get; set; }
+        [JsonProperty("categories")]
+        public List<Category> Categories { get; set; }
     }
 }

@@ -22,7 +22,8 @@ export class NavMenuComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.productService.getCategories().pipe(tap(categories => this.categories$.next(categories))).subscribe();
+    this.productService.getCategories().pipe(tap(categories => this.categories$.next(categories))).subscribe(a => console.log(a));
+
   }
 
   collapse() {

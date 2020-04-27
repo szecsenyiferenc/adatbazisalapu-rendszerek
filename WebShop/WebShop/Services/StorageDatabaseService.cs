@@ -27,5 +27,25 @@ namespace WebShop.Services.DatabaseServices
             };
             return QueryDatabase(query, queryFunction);
         }
+
+        public List<StoragedProductModel> GetStoragedProduct()
+        {
+            string[] columns = new string[]{
+                "StorageId",
+                "ProductId",
+                "Quantity"
+            };
+            string query = $"SELECT {String.Join(",", columns)} FROM ProductOnStorage";
+            Func<SqlDataReader, StoragedProductModel> queryFunction = sqlreader =>
+            {
+                object[] prop = new object[columns.Length];
+                for (int i = 0; i < prop.Length; i++)
+                {
+                    prop[i] = sqlreader.GetValue(i);
+                }
+                return CreateInstance<StoragedProductModel>(prop);
+            };
+            return QueryDatabase(query, queryFunction);
+        }
     }
 }

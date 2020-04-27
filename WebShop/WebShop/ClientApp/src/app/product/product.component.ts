@@ -34,6 +34,8 @@ export class ProductComponent implements OnInit {
         }),
        tap(products => this.products$.next(products)),
      ).subscribe()
+
+     this.products$.pipe(tap(products => console.log(products))).subscribe();
   }
 
 }
