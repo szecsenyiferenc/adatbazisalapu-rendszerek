@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { ProductService } from '../services/product.service';
 import { LikedProduct } from '../models/likedProduct.model';
-import { tap, switchMap, map } from 'rxjs/operators';
+import { tap, switchMap, map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product',
@@ -11,6 +11,7 @@ import { tap, switchMap, map } from 'rxjs/operators';
 })
 export class ProductComponent implements OnInit {
   products$: BehaviorSubject<LikedProduct[]>;
+  products: LikedProduct[];
 
   constructor(private productService: ProductService) {
     this.products$ = new BehaviorSubject<LikedProduct[]>([]);
@@ -33,9 +34,23 @@ export class ProductComponent implements OnInit {
          return this.products$.value;
         }),
        tap(products => this.products$.next(products)),
+       tap(products => this.products = products)
      ).subscribe()
 
-     this.products$.pipe(tap(products => console.log(products))).subscribe();
+     this.productService.selectedCategory$.pipe(
+      map(category => {
+        console.log("PROD", category);
+
+        if(category){
+            return this.products.filter(p => p.categories.find(c => c.id === category.id))
+        }
+      
+        return this.products;
+      }),
+      tap(products => this.products$.next(products)),
+     ).subscribe();
+
+     this.products$.pipe(tap(products => console.log("PRODUCTS", products))).subscribe();
   }
 
 }

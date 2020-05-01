@@ -37,7 +37,7 @@ namespace WebShop.Services.DatabaseServices
         public List<ProductModel> GetProductsWithProperties()
         {
             var products = GetProducts();
-            AddVisitedProductsToProducts(products);
+            //AddVisitedProductsToProducts(products);
             //AddPurhasedProductsToProducts(products);
             AddCommentsToProducts(products);
             AddLikesToProducts(products);
@@ -51,8 +51,6 @@ namespace WebShop.Services.DatabaseServices
                 "Category.Id",
                 "Category.Name"
             };
-
-            //SELECT Category.Id, Category.Name FROM Category, Product, ProductCategory WHERE Product.Id = ProductCategory.ProductId AND Category.Id = ProductCategory.CategoryId AND Product.Id = 2;
 
             foreach (var product in products)
             {
@@ -70,14 +68,13 @@ namespace WebShop.Services.DatabaseServices
                     }
                    
                     var prodCat = CreateInstance<CategoryModel>(prop);
-                    //prodCat.Category = CreateInstance<CategoryModel>(prop2);
                     return prodCat;
                 };
                 product.Categories = QueryDatabase(query, queryFunction);
             }
         }
 
-        public void AddVisitedProductsToProducts(List<ProductModel> products)
+        public void AddVisitedProductsToProducts(List<ProductModel> products, string userId)
         {
             string[] columns = new string[]{
                 "UserId",
@@ -105,7 +102,7 @@ namespace WebShop.Services.DatabaseServices
                     "ON Product.Id = VisitedProducts.ProductId " +
                     "JOIN Customer " +
                     "ON Customer.Email = VisitedProducts.UserId " +
-                    $"WHERE Product.Id = '{product.Id}';";
+                    $"WHERE Product.Id = '{product.Id}' AND Customer.Email = '{userId}';";
                 Func<SqlDataReader, VisitModel> queryFunction = sqlreader =>
                 {
                     object[] prop = new object[columns.Length];
@@ -420,10 +417,35 @@ namespace WebShop.Services.DatabaseServices
                 }
             }
 
-          
+            return ExecuteQuery(query);
+        }
+
+        public bool AddVisitedProductToDatabase(string userId, int productId)
+        {
+            string[] columns = new string[]{
+                "UserId",
+                "ProductId",
+                "TimesOfVisit"
+            };
+
+            var previousValue = GetVisitedProductFromDatabase(userId, productId);
+
+            string query = null;
+
+            int count = previousValue.Any() ? previousValue[0].TimesOfVisit + 1 : 1;
+
+            if(count == 1)
+            {
+                query = $"INSERT INTO VisitedProducts({String.Join(",", columns)}) VALUES('{userId}', {productId}, {count})";
+            }
+            else
+            {
+                query = $"UPDATE VisitedProducts SET TimesOfVisit = {count} WHERE ProductId = {productId} AND UserId = '{userId}';";
+            }
 
             return ExecuteQuery(query);
         }
+
 
         public List<LikeModel> GetLikeModelsFromDatabaseById(Like like)
         {
@@ -465,6 +487,28 @@ namespace WebShop.Services.DatabaseServices
                     prop[i] = value;
                 }
                 return CreateInstance<LikeModel>(prop);
+            };
+            return QueryDatabase(query, queryFunction);
+        }
+
+        public List<VisitModel> GetVisitedProductFromDatabase(string userId, int productId)
+        {
+            string[] columns = new string[]{
+                "UserId",
+                "ProductId",
+                "TimesOfVisit"
+            };
+            string query = $"SELECT {String.Join(",", columns)} FROM VisitedProducts WHERE UserId = '{userId}' AND ProductId = {productId}";
+            Func<SqlDataReader, VisitModel> queryFunction = sqlreader =>
+            {
+                object[] prop = new object[columns.Length];
+                for (int i = 0; i < prop.Length; i++)
+                {
+                    var value = sqlreader.GetValue(i);
+                    value = value.ToString() != "" ? value : null;
+                    prop[i] = value;
+                }
+                return CreateInstance<VisitModel>(prop);
             };
             return QueryDatabase(query, queryFunction);
         }

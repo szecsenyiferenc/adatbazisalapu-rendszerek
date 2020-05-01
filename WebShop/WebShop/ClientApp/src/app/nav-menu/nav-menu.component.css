@@ -93,7 +93,8 @@ html {
                                   supported by Chrome, Opera and Firefox */
 }
 
-.categories a:hover {
+.categories:hover {
   color: white;
   background-color: #1b6ec2;
+  cursor: pointer;
 }

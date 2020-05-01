@@ -95,6 +95,20 @@
         </li>
       </ul>
     </div>
+
+    <h2 class="customer-detail-title">Látogatott termékek</h2>
+    <ul class="list-group cart-items-container">
+        <li class="list-group-item cart-item" *ngFor="let visitedProduct of (visitedProducts$ | async)">
+          <div class="cart-item-type">
+            <img class="cart-item-image" [src]="visitedProduct.image | image">
+            <div class="cart-item-details">
+              <div class="cart-item-name">
+                {{visitedProduct.name}}
+              </div>
+            </div>
+          </div>
+        </li>
+    </ul>
     
     <h2 class="customer-detail-title">Rendelések</h2>
     <div *ngFor="let cart of (carts$ | async)">

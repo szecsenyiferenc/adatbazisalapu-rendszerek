@@ -1,4 +1,5 @@
 .router{
+    margin-top: 57px !important;
     position: relative;
 }
 
@@ -7,3 +8,13 @@ app-product{
     width: 100%;
 }
 
+.mock-div{
+    height: 57px;
+    width: 100%;
+}
+
+app-nav-menu{
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+}

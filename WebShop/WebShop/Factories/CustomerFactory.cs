@@ -90,5 +90,12 @@ namespace WebShop.Factories
             product.Categories = categoriesList;
             return product;
         }
+
+        public VisitedProduct CreateProductWithVisits(ProductModel productModel)
+        {
+            int value = productModel.VisitedProducts.Count != 0 ? productModel.VisitedProducts[0].TimesOfVisit : 0;
+            var product = CreateVisitedProducts(productModel, value);
+            return product;
+        }
     }
 }

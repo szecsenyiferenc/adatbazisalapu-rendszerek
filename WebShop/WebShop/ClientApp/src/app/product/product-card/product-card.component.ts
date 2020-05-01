@@ -27,6 +27,7 @@ export class ProductCardComponent implements OnInit {
   }
 
   openProduct(){
+    this.productService.addToVisitedProduct(this.product);
     this.router.navigate(['/products', this.product.id]);
   }
 }

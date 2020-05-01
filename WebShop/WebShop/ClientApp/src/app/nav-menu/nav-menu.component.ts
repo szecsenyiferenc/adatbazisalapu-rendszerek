@@ -18,12 +18,11 @@ export class NavMenuComponent implements OnInit {
 
   constructor(private loginService: LoginService, private productService: ProductService){
     this.cartItems = this.productService.cart;
-    this.categories$ = new BehaviorSubject<Category[]>([]);
+    this.categories$ = this.productService.categories$;
   }
 
   ngOnInit(){
-    this.productService.getCategories().pipe(tap(categories => this.categories$.next(categories))).subscribe(a => console.log(a));
-
+    this.productService.getCategories().subscribe();
   }
 
   collapse() {
@@ -36,5 +35,13 @@ export class NavMenuComponent implements OnInit {
 
   logout(){
     this.loginService.logout();
+  }
+
+  selectCategory(category: Category){
+    this.productService.selectCategory(category);
+  }
+
+  resetCategory(){
+    this.productService.selectCategory(null);
   }
 }

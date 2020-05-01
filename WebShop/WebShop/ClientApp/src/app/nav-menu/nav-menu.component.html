@@ -3,7 +3,7 @@
     class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
   >
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/products']">WebShop</a>
+      <a class="navbar-brand" (click)="resetCategory()" [routerLink]="['/products']">WebShop</a>
       <div class="customer-welcome noselect" *ngIf="(loginService.customer$ | async) as loggedInCustomer" [routerLink]="['/profile']">
         Hello {{ loggedInCustomer.lastName }} {{ loggedInCustomer.firstName }}!
       </div>
@@ -29,8 +29,8 @@
               >Kategóriák</a
             >
             <ul class="list-group dropdown-content">
-              <li class="list-group-item categories" *ngFor="let category of (categories$ | async)">
-                <a class="dropdown-item" href="#">{{ category.name }}</a>
+              <li class="list-group-item categories noselect" *ngFor="let category of (categories$ | async)" (click)="selectCategory(category)">
+                {{ category.name }}
               </li>
             </ul>
           </li>

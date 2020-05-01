@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './http.service';
 import { map, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { Product } from '../models/product.model';
 import { CartItem } from '../models/cart-item.model';
 import { LoginService } from './login.service';
@@ -12,6 +12,7 @@ import { LikedProduct } from '../models/likedProduct.model';
 import { Customer } from '../models/customer.model';
 import { HttpHeaders } from '@angular/common/http';
 import { Category } from '../models/category.model';
+import { VisitedProduct } from '../models/visitedProduct.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,14 @@ export class ProductService {
   cart: CartItem[];
   products: Product[];
   categories: Category[];
+  categories$: BehaviorSubject<Category[]>;
+  selectedCategory$: BehaviorSubject<Category>;
   likes: any[];
 
   constructor(private httpService: HttpService, private loginService: LoginService) {
     this.cart = [];
+    this.categories$ = new BehaviorSubject<Category[]>([]);
+    this.selectedCategory$ = new BehaviorSubject<Category>(null);
   }
 
 
@@ -34,6 +39,10 @@ export class ProductService {
   getProductById(id: string): Observable<LikedProduct> {
     let selectedProduct = this.products.find(p => p.id === +id);
     return of(selectedProduct);
+  }
+
+  getVisitedProducts(): Observable<VisitedProduct[]> {
+    return this.httpService.getVisitedProducts(this.loginService.customer$.value.email);
   }
 
   addItemToCart(product: Product, quantity: number) {
@@ -109,6 +118,15 @@ export class ProductService {
   }
 
   getCategories(): Observable<Category[]> {
-    return this.httpService.getCategories().pipe(tap(categories => this.categories = categories));
+    return this.httpService.getCategories().pipe(tap(categories => this.categories$.next(categories)));
   }
+
+  selectCategory(category: Category){
+    this.selectedCategory$.next(category);
+  }
+
+  addToVisitedProduct(product: Product){
+    this.httpService.addToVisitedProduct(this.loginService.customer$.value , product);
+  }
+
 }

@@ -13,11 +13,10 @@ namespace WebShop.Providers
         DatabaseFacade db = new DatabaseFacade();
         CustomerFactory factory = new CustomerFactory();
 
-
         public List<Product> GetProducts()
         {
             var productModels = db.Products.GetProductsWithProperties();
-            db.Products.AddCategoriesToProducts(productModels);
+            //db.Products.AddCategoriesToProducts(productModels);
             var products = new List<Product>();
 
             foreach (var productModel in productModels)
@@ -28,10 +27,29 @@ namespace WebShop.Providers
             return products;
         }
 
+        public List<VisitedProduct> GetVisitedProductByUserId(string userId)
+        {
+            var productModels = db.Products.GetProducts();
+            db.Products.AddVisitedProductsToProducts(productModels, userId);
+            var products = new List<VisitedProduct>();
+
+            foreach (var productModel in productModels)
+            {
+                products.Add(factory.CreateProductWithVisits(productModel));
+            }
+
+            return products;
+        }
+
         public bool AddProductToDatabase(Product product)
         {
             var productModel = factory.CreateProductModel(product);
             return db.Products.AddProductToDatabase(productModel);
+        }
+
+        public bool AddVisitedProductToDatabase(Customer customer, Product product)
+        {
+            return db.Products.AddVisitedProductToDatabase(customer.Email, product.Id);
         }
 
         public bool AddCommentToDatabase(Comment comment)

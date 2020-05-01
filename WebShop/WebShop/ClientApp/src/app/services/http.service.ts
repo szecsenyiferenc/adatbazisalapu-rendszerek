@@ -28,6 +28,10 @@ export class HttpService {
     return this.http.get(this.baseUrl + 'api/product');
   }
 
+  getVisitedProducts(email: string): Observable<any> {
+    return this.http.get(this.baseUrl + `api/visitproduct/${email}`);
+  }
+
   registerUser(customer: Customer) {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(this.baseUrl + 'api/register', JSON.stringify(customer), { headers });
@@ -76,5 +80,10 @@ export class HttpService {
 
   getCategories(): Observable<any> {
     return this.http.get(this.baseUrl + 'api/category');
+  }
+
+  addToVisitedProduct(customer: Customer, product: Product){
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(this.baseUrl + 'api/visitproduct', JSON.stringify({customer, product}), { headers }).subscribe();
   }
 }
