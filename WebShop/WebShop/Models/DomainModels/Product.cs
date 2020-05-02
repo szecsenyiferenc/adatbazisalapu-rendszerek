@@ -18,6 +18,7 @@ namespace WebShop.Models.DomainModels
             Name = name;
             Price = price;
             Image = image;
+            Likes = 0;
         }
 
         [JsonProperty("id")]
@@ -30,5 +31,7 @@ namespace WebShop.Models.DomainModels
         public byte[] Image { get; set; }
         [JsonProperty("categories")]
         public List<Category> Categories { get; set; }
+        [JsonProperty("likes")]
+        public int Likes { get; set; }
     }
 }

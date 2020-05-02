@@ -29,7 +29,20 @@ namespace WebShop.Factories
             {
                 return null;
             }
-            return new Product(productModel.Id, productModel.Name, productModel.Price, productModel.Image);
+            var product = new Product(productModel.Id, productModel.Name, productModel.Price, productModel.Image);
+
+            if(productModel.Likes != null && productModel.Likes.Any())
+            {
+                int likeValue = 0;
+                foreach (var like in productModel.Likes)
+                {
+                    likeValue += like.IsLiked.HasValue ? (like.IsLiked.Value == true ? 1 : -1) : 0;
+                }
+                product.Likes = likeValue;
+            }
+
+
+            return product;
         }
 
         public ProductModel CreateProductModel(Product product)

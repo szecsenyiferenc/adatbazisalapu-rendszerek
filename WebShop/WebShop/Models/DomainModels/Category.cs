@@ -8,6 +8,11 @@ namespace WebShop.Models.DomainModels
 {
     public class Category
     {
+        public Category()
+        {
+
+        }
+
         public Category(int id, string name)
         {
             Id = id;

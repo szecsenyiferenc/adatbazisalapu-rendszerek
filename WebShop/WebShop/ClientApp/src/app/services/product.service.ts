@@ -126,7 +126,9 @@ export class ProductService {
   }
 
   addToVisitedProduct(product: Product){
-    this.httpService.addToVisitedProduct(this.loginService.customer$.value , product);
+    if(this.loginService.customer$.value){
+      this.httpService.addToVisitedProduct(this.loginService.customer$.value , product);
+    }
   }
 
 }

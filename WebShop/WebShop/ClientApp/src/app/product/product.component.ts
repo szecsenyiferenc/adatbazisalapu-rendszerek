@@ -33,13 +33,13 @@ export class ProductComponent implements OnInit {
          })};
          return this.products$.value;
         }),
+       map(p => p.sort((a,b) => a.likes > b.likes ? -1 : 1)),
        tap(products => this.products$.next(products)),
        tap(products => this.products = products)
      ).subscribe()
 
      this.productService.selectedCategory$.pipe(
       map(category => {
-        console.log("PROD", category);
 
         if(category){
             return this.products.filter(p => p.categories.find(c => c.id === category.id))
