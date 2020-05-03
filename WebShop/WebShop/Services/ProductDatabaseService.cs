@@ -533,6 +533,15 @@ namespace WebShop.Services.DatabaseServices
             return ExecuteQuery(query, paramList);
         }
 
+        public int GetStockFromDatabase(int productId)
+        {
+            string query = $"SELECT Max(Quantity) FROM ProductOnStorage WHERE ProductId = '{productId}'";
+            Func<SqlDataReader, int> queryFunction = sqlreader =>
+            {
+                return sqlreader.GetInt32(0);
+            };
+            return QueryDatabase(query, queryFunction)[0];
+        }
     }
 
    

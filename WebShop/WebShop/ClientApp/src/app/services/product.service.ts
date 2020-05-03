@@ -141,4 +141,7 @@ export class ProductService {
     return this.httpService.updateProduct(product);
   }
 
+  getStockByProduct(product: Product){
+    return this.httpService.getStockByProduct(product);
+  }
 }

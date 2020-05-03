@@ -104,4 +104,8 @@ export class HttpService {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.put(this.baseUrl + 'api/customer/1', JSON.stringify(customer), { headers });
   }
+
+  getStockByProduct(product: Product): Observable<any>{
+    return this.http.get(this.baseUrl + `api/storage/${product.id}`);
+  }
 }

@@ -14,6 +14,14 @@ namespace WebShop.Services
         public bool AddCartToDatabase(Cart cart) {
             try
             {
+                foreach (var cartItem in cart.CartItems)
+                {
+                    string query2 = $"UPDATE ProductOnStorage SET Quantity = Quantity - {cartItem.Quantity}" +
+                    $"WHERE ProductId = {cartItem.Product.Id} AND " +
+                    $"StorageId = (SELECT TOP (1) StorageId FROM ProductOnStorage WHERE ProductId = '{cartItem.Product.Id}' ORDER BY Quantity DESC)";
+                    ExecuteQuery(query2);
+                }
+
                 string[] columns = new string[]{
                 "UserId",
                 "PurchaseDate",

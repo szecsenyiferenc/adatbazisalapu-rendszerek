@@ -12,6 +12,7 @@ import { LikedProduct } from 'src/app/models/likedProduct.model';
 export class ProductCardComponent implements OnInit {
   @Input() product: LikedProduct;
 
+  stock: number;
   counter: number;
 
   constructor(private router: Router, private productService: ProductService) {
@@ -23,7 +24,15 @@ export class ProductCardComponent implements OnInit {
   }
 
   addToCart(){
-    this.productService.addItemToCart(this.product, this.counter);
+    this.productService.getStockByProduct(this.product).subscribe(a => {
+      this.stock = a;
+      if (this.stock >= this.counter){
+        this.productService.addItemToCart(this.product, this.counter);
+      } else {
+        alert('Nincs elegendő készleten. Jelenlegi készlet: ' + this.stock);
+      }
+      }
+    );
   }
 
   openProduct(){

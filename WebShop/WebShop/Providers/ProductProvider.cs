@@ -97,5 +97,10 @@ namespace WebShop.Providers
         {
             return db.Products.UpdateProductFromDatabase(product);
         }
+
+        public int GetStockFromDatabase(int productId)
+        {
+            return db.Products.GetStockFromDatabase(productId);
+        }
     }
 }
