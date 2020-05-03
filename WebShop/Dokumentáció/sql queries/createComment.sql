@@ -1,0 +1,32 @@
+CREATE TABLE [dbo].[Comment](
+	[UserId] [nvarchar](255) NOT NULL,
+	[ProductId] [int] NOT NULL,
+	[CommentTime] [datetime] NOT NULL,
+	[CommentText] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_Comment_1] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC,
+	[ProductId] ASC,
+	[CommentTime] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Comment]  WITH CHECK ADD  CONSTRAINT [FK_Comment_Product] FOREIGN KEY([ProductId])
+REFERENCES [dbo].[Product] ([Id])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[Comment] CHECK CONSTRAINT [FK_Comment_Product]
+GO
+
+ALTER TABLE [dbo].[Comment]  WITH CHECK ADD  CONSTRAINT [FK_Comment_User] FOREIGN KEY([UserId])
+REFERENCES [dbo].[Customer] ([Email])
+ON UPDATE CASCADE
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[Comment] CHECK CONSTRAINT [FK_Comment_User]
+GO
+
