@@ -44,20 +44,15 @@ export class CartComponent implements OnInit {
   orderProducts(){
     console.log(this.cart);
     let customer: Customer = this.loginService.customer$.value;
-    if(customer.balance >= this.totalPrice){
-        this.productService.uploadCart(this.cart).subscribe(a => console.log(a));
-        this.productService.uploadBalance(-(this.totalPrice)).subscribe();
-        alert('Sikeres rendelés!');  
+      this.productService.uploadCart(this.cart).subscribe(a => console.log(a));
+      // this.productService.uploadBalance(-(this.totalPrice)).subscribe();
+      alert('Sikeres rendelés!');  
 
-        for(let i = this.cart.length - 1; i >= 0; i--){
-          this.cart.splice(i, 1);
-        }
-        
-        this.router.navigate(['/profile']);
-    }else{
-      alert('Nincs elegendő egyenleged.');
-    }
-
+      for(let i = this.cart.length - 1; i >= 0; i--){
+        this.cart.splice(i, 1);
+      }
+      
+      this.router.navigate(['/profile']);
   }
 
 }
