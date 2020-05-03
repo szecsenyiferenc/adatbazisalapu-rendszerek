@@ -512,5 +512,28 @@ namespace WebShop.Services.DatabaseServices
             };
             return QueryDatabase(query, queryFunction);
         }
+
+        public bool DeleteProductFromDatabase(int productId)
+        {
+            string query = $"DELETE FROM Product WHERE Id = {productId}";
+            return ExecuteQuery(query);
+        }
+
+        public bool UpdateProductFromDatabase(Product product)
+        {
+            string[] columns = new string[]{
+                $"Name = '{product.Name}'",
+                $"Price = {product.Price}"
+            };
+            string query = $"UPDATE Product SET {String.Join(",", columns)}, Image = @imagebinary WHERE Id = {product.Id}";
+
+            SqlQueryParam param = new SqlQueryParam("@imagebinary", SqlDbType.VarBinary, product.Image);
+            var paramList = new List<SqlQueryParam>() { param };
+
+            return ExecuteQuery(query, paramList);
+        }
+
     }
+
+   
 }

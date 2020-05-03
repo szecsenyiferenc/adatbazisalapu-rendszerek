@@ -65,3 +65,6 @@ textarea {
     align-items: center;
 }
 
+.card-delete-button{
+    margin-top: 10px;
+}

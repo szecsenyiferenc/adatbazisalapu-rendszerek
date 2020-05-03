@@ -87,5 +87,15 @@ namespace WebShop.Providers
 
             return likes;
         }
+
+        public bool DeleteProductFromDatabase(int productId)
+        {
+            return db.Products.DeleteProductFromDatabase(productId);
+        }
+
+        public bool UpdateProductFromDatabase(Product product)
+        {
+            return db.Products.UpdateProductFromDatabase(product);
+        }
     }
 }

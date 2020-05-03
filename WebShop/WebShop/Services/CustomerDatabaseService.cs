@@ -264,7 +264,27 @@ namespace WebShop.Services.DatabaseServices
         public bool UploadBalanceInDatabase(Customer customer)
         {
             string query = $"UPDATE Customer SET Balance = {customer.Balance} WHERE Email = '{customer.Email}'";
+            return ExecuteQuery(query);
+        }
 
+        public bool DeleteCustomerFromDatabase(string userId)
+        {
+            string query = $"DELETE FROM Customer WHERE Email = '{userId}'";
+            return ExecuteQuery(query);
+        }
+
+        public bool UpdateCustomerFromDatabase(RegistrationCustomer customer)
+        {
+            string[] columns = new string[]{
+                $"FirstName = '{customer.FirstName}'",
+                $"LastName = '{customer.LastName}'",
+                $"Phone = '{customer.Phone}'",
+                $"City = '{customer.City}'",
+                $"Street = '{customer.Street}'",
+                $"HouseNumber = {customer.HouseNumber}"
+            };
+
+            string query = $"UPDATE Customer SET {String.Join(",", columns)} WHERE Email = '{customer.Email}'";
             return ExecuteQuery(query);
         }
     }

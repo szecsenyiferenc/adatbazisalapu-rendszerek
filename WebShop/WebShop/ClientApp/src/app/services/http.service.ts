@@ -86,4 +86,22 @@ export class HttpService {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post(this.baseUrl + 'api/visitproduct', JSON.stringify({customer, product}), { headers }).subscribe();
   }
+
+  deleteProduct(product: Product): Observable<any>{
+    return this.http.delete(this.baseUrl + `api/product/${product.id}`);
+  }
+
+  deleteCustomer(customer: Customer): Observable<any>{
+    return this.http.delete(this.baseUrl + `api/customer/${customer.email}`);
+  }
+
+  updateProduct(product: Product): Observable<any>{
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(this.baseUrl + `api/product/${product.id}`, JSON.stringify(product), { headers });
+  }
+
+  updateUser(customer: Customer) {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(this.baseUrl + 'api/customer/1', JSON.stringify(customer), { headers });
+  }
 }

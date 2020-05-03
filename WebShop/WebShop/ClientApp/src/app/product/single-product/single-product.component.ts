@@ -68,4 +68,14 @@ export class SingleProductComponent implements OnInit {
     this.productService.addItemToCart(this.product, this.counter);
   }
 
+  update(){
+    this.productService.selectedProduct = this.product;
+    this.router.navigate(['/uploadProduct']);
+  }
+
+  delete(){
+    this.productService.deleteProduct(this.product).subscribe();
+    this.router.navigate(['/products']);
+  }
+
 }

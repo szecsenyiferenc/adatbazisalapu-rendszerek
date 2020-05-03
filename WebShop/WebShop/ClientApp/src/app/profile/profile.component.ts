@@ -6,6 +6,7 @@ import { Cart } from '../models/cart.model';
 import { ProductService } from '../services/product.service';
 import { VisitedProduct } from '../models/visitedProduct.model';
 import { tap, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +19,7 @@ export class ProfileComponent implements OnInit {
   visitedProducts$: BehaviorSubject<VisitedProduct[]>;
   plusBalance: number;
 
-  constructor(private loginService: LoginService, private productService: ProductService) { 
+  constructor(private loginService: LoginService, private productService: ProductService, private router: Router) { 
     this.customer$ = this.loginService.customer$;
     this.carts$ = new BehaviorSubject<Cart[]>([]);
     this.visitedProducts$ = new BehaviorSubject<VisitedProduct[]>([]);
@@ -38,5 +39,15 @@ export class ProfileComponent implements OnInit {
   uploadBalance(){
     this.productService.uploadBalance(this.plusBalance).subscribe();
   }
+
+  update(){
+    this.router.navigateByUrl('/registration');
+  }
+
+  delete(){
+    this.loginService.delete();
+    this.router.navigateByUrl('/products');
+  }
+
 
 }

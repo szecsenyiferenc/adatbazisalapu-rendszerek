@@ -38,14 +38,16 @@ namespace WebShop.Controllers
 
         // PUT: api/Product/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public bool Put(int id, [FromBody] Product value)
         {
+            return productProvider.UpdateProductFromDatabase(value);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public bool Delete(int id)
         {
+            return productProvider.DeleteProductFromDatabase(id);
         }
     }
 }

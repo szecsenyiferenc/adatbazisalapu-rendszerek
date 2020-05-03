@@ -40,15 +40,17 @@ namespace WebShop.Controllers
         }
 
         //// PUT: api/Customer/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        [HttpPut("api/customer/{id}")]
+        public Customer Put(int id, [FromBody] RegistrationCustomer value)
+        {
+            return customerProvider.UpdateCustomerFromDatabase(value);
+        }
 
-        //// DELETE: api/ApiWithActions/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("api/customer/{id}")]
+        public bool Delete(string id)
+        {
+            return customerProvider.DeleteCustomerFromDatabase(id);
+        }
     }
 }

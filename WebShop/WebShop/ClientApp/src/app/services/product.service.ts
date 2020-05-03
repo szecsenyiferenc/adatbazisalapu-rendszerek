@@ -24,6 +24,7 @@ export class ProductService {
   categories$: BehaviorSubject<Category[]>;
   selectedCategory$: BehaviorSubject<Category>;
   likes: any[];
+  selectedProduct: Product;
 
   constructor(private httpService: HttpService, private loginService: LoginService) {
     this.cart = [];
@@ -33,6 +34,7 @@ export class ProductService {
 
 
   getProducts(): Observable<Product[]> {
+    this.selectedProduct = null;
     return this.httpService.getProducts().pipe(tap(products => this.products = products));
   }
 
@@ -129,6 +131,14 @@ export class ProductService {
     if(this.loginService.customer$.value){
       this.httpService.addToVisitedProduct(this.loginService.customer$.value , product);
     }
+  }
+
+  deleteProduct(product: Product): Observable<any>{
+    return this.httpService.deleteProduct(product);
+  }
+
+  updateProduct(product: Product): Observable<any> {
+    return this.httpService.updateProduct(product);
   }
 
 }

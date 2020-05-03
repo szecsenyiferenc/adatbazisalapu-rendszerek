@@ -26,6 +26,11 @@ logout(){
   this.customer$.next(null);
 }
 
+delete(){
+  this.httpService.deleteCustomer(this.customer$.value).subscribe();
+  this.logout();
+}
+
 ngOnDestroy(): void {
   this.loginSubscription.unsubscribe();
 }

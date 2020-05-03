@@ -66,6 +66,7 @@ namespace WebShop.Services
             {
                 foreach (var cartItem in cart.CartItems)
                 {
+
                     string[] columns = new string[]{
                         "CartId",
                         "ProductId",

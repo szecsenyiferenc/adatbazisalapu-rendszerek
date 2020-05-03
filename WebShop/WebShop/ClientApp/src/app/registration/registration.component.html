@@ -1,7 +1,10 @@
 <div class="container">
-  <div class="py-5 text-center disable-padding">
+  <div class="py-5 text-center disable-padding" *ngIf="!loginService.customer$?.value">
     <h2>Regisztráció</h2>
     <p class="lead">Üdvözlünk új felhasználó!</p>
+  </div>
+  <div class="py-5 text-center disable-padding" *ngIf="loginService.customer$?.value">
+    <h2>Profil szerkesztése</h2>
   </div>
 
   <div class="row">
@@ -15,7 +18,7 @@
             class="form-control" 
             id="lastName" 
             placeholder="Vezetéknév" 
-            ngModel
+            [ngModel] = "lname"
             #lastName="ngModel"
             name="lastName"
             required>
@@ -30,7 +33,7 @@
           class="form-control" 
           id="firstName" 
           placeholder="Keresztnév"
-          ngModel
+          [ngModel] = "fname"
           #firstName="ngModel"
           name="firstName"
           required>
@@ -39,7 +42,7 @@
           </div>
         </div>
       </div>
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="!loginService.customer$?.value">
           <label for="email">Email</label>
           <input type="email" 
           class="form-control" 
@@ -54,7 +57,7 @@
           </div>
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3" *ngIf="!loginService.customer$?.value">
           <label for="email">Jelszó</label>
           <input type="password" 
           class="form-control" 
@@ -75,7 +78,7 @@
           class="form-control" 
           id="phone" 
           placeholder="XX-XX-XXX-XXXX" 
-          ngModel
+          [ngModel] = "tel"
           #phone="ngModel"
           name="phone"
           required>
@@ -90,7 +93,7 @@
           class="form-control" 
           id="city" 
           placeholder="Város" 
-          ngModel
+          [ngModel] = "cit"
           #city="ngModel"
           name="city"
           required>
@@ -105,7 +108,7 @@
           class="form-control" 
           id="street" 
           placeholder="Utca" 
-          ngModel
+          [ngModel] = "str"
           #street="ngModel"
           name="street"
           required>
@@ -120,7 +123,7 @@
           class="form-control" 
           id="houseNumber" 
           placeholder="Házszám" 
-          ngModel
+          [ngModel] = "hnum"
           #houseNumber="ngModel"
           name="houseNumber"
           required>
@@ -128,7 +131,8 @@
             Please enter your shipping address.
           </div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Regisztráció</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" *ngIf="!loginService.customer$?.value">Regisztráció</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" *ngIf="loginService.customer$?.value">Frissítés</button>
       </form>
     </div>
   </div>

@@ -16,6 +16,10 @@
         <input [(ngModel)]="counter" type="number" min="0" step="1" class="product-number" id="productNumber" max="99">
       </div>
     </div>
+    <div class="card-buy card-delete-button" *ngIf="customerComment.customer?.isAdmin">
+      <button type="button" (click)="update()" class="btn btn-secondary product-button">Szerkesztés</button>
+      <button type="button" (click)="delete()" class="btn btn-danger product-button">Törlés</button>
+    </div>
   </div>
   <div class="comment-container">
     <app-comment *ngIf="customerComment.customer" (reload)="reload()" [product]="product" [comment]="customerComment" [isNewComment]="true"></app-comment>

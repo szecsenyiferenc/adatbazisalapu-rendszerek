@@ -1,6 +1,7 @@
 <div class="container">
   <div class="py-5 text-center disable-padding">
-    <h2>Termék feltöltése</h2>
+    <h2 *ngIf="!productService.selectedProduct">Termék feltöltése</h2>
+    <h2 *ngIf="productService.selectedProduct">Termék szerkesztése</h2>
   </div>
 
   <div class="row">
@@ -13,7 +14,7 @@
           class="form-control" 
           id="productName" 
           placeholder="Terméknév" 
-          ngModel
+          [ngModel] = "prodName"
           #productName="ngModel"
           name="productName"
           required>
@@ -29,7 +30,7 @@
           class="form-control" 
           id="productPrice" 
           placeholder="Ár" 
-          ngModel
+          [ngModel] = "prodPrice"
           #productPrice="ngModel"
           name="productPrice"
           required>

@@ -82,6 +82,14 @@
           {{customer.balance}}
         </div>
       </li>
+      <li class="list-group-item customer-detail-item">
+        <div>
+          <button type="button" (click)="update()" class="btn btn-secondary">Szerkesztés</button>
+        </div>
+        <div>
+          <button type="button" (click)="delete()" class="btn btn-danger">Törlés</button>
+        </div>
+      </li>
     </ul>
 
     <h2 class="customer-detail-title">Egyenleg feltöltése</h2>
